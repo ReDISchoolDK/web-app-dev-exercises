@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "web-app-dev-starter",
+  "compatibility_date": "2026-04-03",
+  "assets": {
+    "directory": "dist"
+  }
+}
