@@ -5,10 +5,10 @@
 // (husky, hound, terrier, spaniel) and we show that breed's sub-breeds.
 //
 // Success criteria:
-//   [ ] Selected breed is local state (useState)
-//   [ ] Query auto-refetches when the breed changes — *without* calling
+//   [x] Selected breed is local state (useState)
+//   [x] Query auto-refetches when the breed changes — *without* calling
 //       refetch() (the queryKey changes, so the query identity changes)
-//   [ ] Switching back to a previously-selected breed returns instantly
+//   [x] Switching back to a previously-selected breed returns instantly
 //       from cache (verify in React Query Devtools)
 //
 // Stretch: remove the breed from the queryKey, observe what breaks in
@@ -18,7 +18,10 @@
 //   https://tanstack.com/query/latest/docs/framework/react/guides/query-keys
 // =====================================================================
 
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { fetchSubBreeds } from "@/lib/api";
 
 export const Route = createFileRoute("/exercise/sub-breeds/")({
 	component: ExercisePage,
@@ -27,23 +30,59 @@ export const Route = createFileRoute("/exercise/sub-breeds/")({
 const BREEDS = ["husky", "hound", "terrier", "spaniel"];
 
 function ExercisePage() {
-	// 1. Track the selected breed with useState. Default to BREEDS[0].
+	const [breed, setBreed] = useState(BREEDS[0]);
 
-	// 2. Call useQuery with queryKey: ["subBreeds", breed] and queryFn that
-	//    calls fetchSubBreeds(breed) from @/lib/api. NO refetch() call.
-
-	// 3. Render a <select> for the breeds, then loading / empty / list states.
+	const subBreedsQuery = useQuery({
+		queryKey: ["subBreeds", breed],
+		queryFn: () => fetchSubBreeds(breed),
+		// Sub-breed lists are reference data — never change in our session.
+		// staleTime: Infinity means React Query won't auto-refetch in the
+		// background after a cache hit. So switching back to a previously-
+		// loaded breed is a pure cache read with zero network calls.
+		staleTime: Number.POSITIVE_INFINITY,
+	});
 
 	return (
 		<div className="mx-auto max-w-2xl p-8">
 			<h1 className="mb-2 text-3xl font-bold">Sub-breeds</h1>
 			<p className="mb-6 text-muted-foreground">
-				Pick a breed; show its sub-breeds. Watch the cache in devtools.
+				Pick a breed; the queryKey changes, so React Query refetches. Switch
+				back to a breed you already loaded — instant from cache. Watch the cache
+				in devtools.
 			</p>
-			{/* TODO: breed select, sub-breed list, loading state */}
-			<p className="text-sm text-muted-foreground">
-				Breeds available: {BREEDS.join(", ")}
-			</p>
+
+			<label className="mb-6 flex items-center gap-3">
+				<span className="text-sm font-medium">Breed</span>
+				<select
+					value={breed}
+					onChange={(e) => setBreed(e.target.value)}
+					className="rounded-md border bg-background px-3 py-2 text-sm"
+				>
+					{BREEDS.map((b) => (
+						<option key={b} value={b}>
+							{b}
+						</option>
+					))}
+				</select>
+			</label>
+
+			{subBreedsQuery.isPending ? (
+				<div className="text-muted-foreground">Loading…</div>
+			) : subBreedsQuery.isError ? (
+				<div className="text-destructive">
+					Error: {subBreedsQuery.error.message}
+				</div>
+			) : subBreedsQuery.data.length === 0 ? (
+				<div className="text-muted-foreground">
+					No sub-breeds for this breed.
+				</div>
+			) : (
+				<ul className="list-disc pl-5">
+					{subBreedsQuery.data.map((sub) => (
+						<li key={sub}>{sub}</li>
+					))}
+				</ul>
+			)}
 		</div>
 	);
 }
