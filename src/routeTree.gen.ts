@@ -10,33 +10,76 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExerciseSubBreedsIndexRouteImport } from './routes/exercise/sub-breeds/index'
+import { Route as ExerciseRandomDogIndexRouteImport } from './routes/exercise/random-dog/index'
+import { Route as ExerciseImageCountIndexRouteImport } from './routes/exercise/image-count/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExerciseSubBreedsIndexRoute = ExerciseSubBreedsIndexRouteImport.update({
+  id: '/exercise/sub-breeds/',
+  path: '/exercise/sub-breeds/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExerciseRandomDogIndexRoute = ExerciseRandomDogIndexRouteImport.update({
+  id: '/exercise/random-dog/',
+  path: '/exercise/random-dog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExerciseImageCountIndexRoute = ExerciseImageCountIndexRouteImport.update({
+  id: '/exercise/image-count/',
+  path: '/exercise/image-count/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/exercise/image-count/': typeof ExerciseImageCountIndexRoute
+  '/exercise/random-dog/': typeof ExerciseRandomDogIndexRoute
+  '/exercise/sub-breeds/': typeof ExerciseSubBreedsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/exercise/image-count': typeof ExerciseImageCountIndexRoute
+  '/exercise/random-dog': typeof ExerciseRandomDogIndexRoute
+  '/exercise/sub-breeds': typeof ExerciseSubBreedsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/exercise/image-count/': typeof ExerciseImageCountIndexRoute
+  '/exercise/random-dog/': typeof ExerciseRandomDogIndexRoute
+  '/exercise/sub-breeds/': typeof ExerciseSubBreedsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/exercise/image-count/'
+    | '/exercise/random-dog/'
+    | '/exercise/sub-breeds/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/exercise/image-count'
+    | '/exercise/random-dog'
+    | '/exercise/sub-breeds'
+  id:
+    | '__root__'
+    | '/'
+    | '/exercise/image-count/'
+    | '/exercise/random-dog/'
+    | '/exercise/sub-breeds/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExerciseImageCountIndexRoute: typeof ExerciseImageCountIndexRoute
+  ExerciseRandomDogIndexRoute: typeof ExerciseRandomDogIndexRoute
+  ExerciseSubBreedsIndexRoute: typeof ExerciseSubBreedsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +91,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/exercise/sub-breeds/': {
+      id: '/exercise/sub-breeds/'
+      path: '/exercise/sub-breeds'
+      fullPath: '/exercise/sub-breeds/'
+      preLoaderRoute: typeof ExerciseSubBreedsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exercise/random-dog/': {
+      id: '/exercise/random-dog/'
+      path: '/exercise/random-dog'
+      fullPath: '/exercise/random-dog/'
+      preLoaderRoute: typeof ExerciseRandomDogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exercise/image-count/': {
+      id: '/exercise/image-count/'
+      path: '/exercise/image-count'
+      fullPath: '/exercise/image-count/'
+      preLoaderRoute: typeof ExerciseImageCountIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExerciseImageCountIndexRoute: ExerciseImageCountIndexRoute,
+  ExerciseRandomDogIndexRoute: ExerciseRandomDogIndexRoute,
+  ExerciseSubBreedsIndexRoute: ExerciseSubBreedsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

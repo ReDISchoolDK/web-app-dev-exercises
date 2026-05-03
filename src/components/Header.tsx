@@ -15,7 +15,24 @@ export default function Header() {
 					>
 						Home
 					</Link>
-					{/* Add your own routes here */}
+					<Link
+						to="/exercise/random-dog"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Step 1
+					</Link>
+					<Link
+						to="/exercise/sub-breeds"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Step 2
+					</Link>
+					<Link
+						to="/exercise/image-count"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Step 3
+					</Link>
 				</nav>
 			</div>
 		</header>
