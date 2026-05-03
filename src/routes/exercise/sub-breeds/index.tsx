@@ -42,6 +42,19 @@ function ExercisePage() {
 		staleTime: Number.POSITIVE_INFINITY,
 	});
 
+	// ANTI-PATTERN — for the stretch discussion. Don't ship this.
+	//
+	// useQuery({
+	//   queryKey: ["subBreeds"],          // ← breed missing! same key for every breed
+	//   queryFn: () => fetchSubBreeds(breed),
+	// });
+	//
+	// What breaks:
+	//  - Switching breeds returns the cached result of the FIRST breed you loaded.
+	//  - Devtools shows one cache entry instead of one-per-breed.
+	//  - React Query has no way to know the request "identity" changed —
+	//    the queryKey *is* the identity.
+
 	return (
 		<div className="mx-auto max-w-2xl p-8">
 			<h1 className="mb-2 text-3xl font-bold">Sub-breeds</h1>
