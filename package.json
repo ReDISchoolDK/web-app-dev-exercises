@@ -12,8 +12,7 @@
     "format": "biome format",
     "check": "biome check",
     "prepare": "husky",
-    "update-docs-index": "tsx scripts/update-agents-index.ts",
-    "postinstall": "bash scripts/install-skills.sh"
+    "update-docs-index": "tsx scripts/update-agents-index.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
