@@ -15,7 +15,12 @@ export default function Header() {
 					>
 						Home
 					</Link>
-					{/* Add your own routes here */}
+					<Link
+						to="/exercise/use-local-storage"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Counter
+					</Link>
 				</nav>
 			</div>
 		</header>

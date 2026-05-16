@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
 	component: HomePage,
@@ -7,19 +7,18 @@ export const Route = createFileRoute("/")({
 function HomePage() {
 	return (
 		<div className="mx-auto max-w-2xl p-8">
-			<h1 className="mb-2 text-3xl font-bold">Session 7 — React Query</h1>
+			<h1 className="mb-2 text-3xl font-bold">Session 8 — Custom Hooks</h1>
 			<p className="mb-6 text-muted-foreground">
-				One exercise, three steps. Check out an{" "}
-				<code className="rounded bg-muted px-1">
-					exercise-react-query-step-*
-				</code>{" "}
-				branch to start. Devtools (bottom-right) should stay open the entire
-				time.
+				One exercise tonight: build a <code>useLocalStorage</code> hook. Keep{" "}
+				<code>exercise.md</code> open while you pair. Keep DevTools →
+				Application → Local Storage visible the whole time.
 			</p>
-			<ul className="flex flex-col gap-3 text-muted-foreground">
-				<li>Step 1 — Random dog (useQuery basics)</li>
-				<li>Step 2 — Sub-breeds (parameters in the queryKey)</li>
-				<li>Step 3 — Image count (Zustand + React Query)</li>
+			<ul className="flex flex-col gap-3">
+				<li>
+					<Link to="/exercise/use-local-storage" className="underline">
+						Exercise — useLocalStorage (Counter that survives reload)
+					</Link>
+				</li>
 			</ul>
 		</div>
 	);

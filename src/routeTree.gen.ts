@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExerciseUseLocalStorageIndexRouteImport } from './routes/exercise/use-local-storage/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExerciseUseLocalStorageIndexRoute =
+  ExerciseUseLocalStorageIndexRouteImport.update({
+    id: '/exercise/use-local-storage/',
+    path: '/exercise/use-local-storage/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/exercise/use-local-storage/': typeof ExerciseUseLocalStorageIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/exercise/use-local-storage': typeof ExerciseUseLocalStorageIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/exercise/use-local-storage/': typeof ExerciseUseLocalStorageIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/exercise/use-local-storage/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/exercise/use-local-storage'
+  id: '__root__' | '/' | '/exercise/use-local-storage/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExerciseUseLocalStorageIndexRoute: typeof ExerciseUseLocalStorageIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/exercise/use-local-storage/': {
+      id: '/exercise/use-local-storage/'
+      path: '/exercise/use-local-storage'
+      fullPath: '/exercise/use-local-storage/'
+      preLoaderRoute: typeof ExerciseUseLocalStorageIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExerciseUseLocalStorageIndexRoute: ExerciseUseLocalStorageIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
