@@ -1,71 +1,79 @@
 // =====================================================================
-// EXERCISE — Express + JSON + React Query (dog favorites)
+// EXERCISE — Part B: wire React Query to your Express API
 //
-// Build: a "save your favorite dogs" page. The list of favorites is
-// persisted to a JSON file by a tiny Express server (server/index.ts),
-// and React Query is responsible for reading + mutating that list from
-// the browser.
+// Goal: hook up this page to the API you built in Part A
+// (server/index.ts). Read the favorites with useQuery; add/remove them
+// with useMutation; keep the displayed list in sync via cache
+// invalidation.
 //
-// Two learning moments:
-//   Part A — server/index.ts: implement GET / POST / DELETE handlers
-//            that read and write server/db.json.
-//   Part B — this file: wire useQuery (read) and two useMutations
-//            (add + remove) with cache invalidation.
+// The UI is already built — buttons, loading/empty states, layout. Your
+// job is to replace the placeholder values + the no-op handlers with
+// real React Query calls.
 //
 // Success criteria:
-//   [x] Random dog image loads via useQuery on fetchRandomDog
-//   [x] Favorites list loads via useQuery on getFavorites
-//   [x] "Save" calls a useMutation that invalidates ["favorites"]
-//   [x] "Remove" calls a useMutation that invalidates ["favorites"]
-//   [x] Refreshing the page keeps the same favorites (proves the JSON
-//       file is doing its job)
+//   [ ] Random dog image loads via useQuery on fetchRandomDog
+//       (reuse the queryKey ["randomDog"])
+//   [ ] Favorites list loads via useQuery on getFavorites
+//       (queryKey ["favorites"])
+//   [ ] "Save to favorites" calls a useMutation on addFavorite and on
+//       success invalidates ["favorites"] so the list refetches
+//   [ ] "Remove" calls a useMutation on removeFavorite, same
+//       invalidation
+//   [ ] Refreshing the page keeps the same favorites (proves the JSON
+//       file is doing its job — only possible once Part A is done)
+//
+// 💡 useQueryClient() gives you the cache handle for invalidation.
+// 💡 useMutation returns an object — call `.mutate(value)` to fire it.
+// 💡 The fetchers (getFavorites, addFavorite, removeFavorite) are
+//    already written in src/lib/api.ts. Don't rewrite fetch — import
+//    them.
 //
 // Navigator's reading: useMutation reference
 //   https://tanstack.com/query/latest/docs/framework/react/guides/mutations
 // =====================================================================
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Heart, RefreshCw, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-	addFavorite,
-	fetchRandomDog,
-	getFavorites,
-	removeFavorite,
-} from "@/lib/api";
+// Step 1: uncomment these as you wire them in.
+// import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+// import {
+// 	addFavorite,
+// 	fetchRandomDog,
+// 	getFavorites,
+// 	removeFavorite,
+// } from "@/lib/api";
 
 export const Route = createFileRoute("/exercise/dog-favorites/")({
 	component: ExercisePage,
 });
 
 function ExercisePage() {
-	const qc = useQueryClient();
+	// 1. Read the random dog with useQuery (queryFn: fetchRandomDog).
+	// 2. Read the favorites with useQuery (queryFn: getFavorites).
+	// 3. Build two useMutation calls (addFavorite, removeFavorite). On
+	//    success, invalidate ["favorites"] via useQueryClient().
+	// 4. Replace the placeholders below with the real values + handlers,
+	//    and drop the `disabled` flags that are TODO-gated.
 
-	const dogQuery = useQuery({
-		queryKey: ["randomDog"],
-		queryFn: fetchRandomDog,
-	});
+	const dog: { data?: string; isPending: boolean; isError: boolean } = {
+		isPending: false,
+		isError: false,
+	};
+	const favorites: string[] = [];
+	const favoritesPending = false;
+	const isSaved = false;
 
-	const favoritesQuery = useQuery({
-		queryKey: ["favorites"],
-		queryFn: getFavorites,
-	});
-
-	const add = useMutation({
-		mutationFn: addFavorite,
-		onSuccess: () => qc.invalidateQueries({ queryKey: ["favorites"] }),
-	});
-
-	const remove = useMutation({
-		mutationFn: removeFavorite,
-		onSuccess: () => qc.invalidateQueries({ queryKey: ["favorites"] }),
-	});
-
-	const favorites = favoritesQuery.data ?? [];
-	const isSaved =
-		dogQuery.data !== undefined && favorites.includes(dogQuery.data);
+	const onPickNext = () => {
+		// TODO: dogQuery.refetch()
+	};
+	const onSave = () => {
+		// TODO: add.mutate(dogQuery.data)
+	};
+	const onRemove = (_url: string) => {
+		// TODO: remove.mutate(_url)
+	};
 
 	return (
 		<div className="mx-auto max-w-3xl p-8">
@@ -73,44 +81,45 @@ function ExercisePage() {
 			<p className="mb-6 text-muted-foreground">
 				Pick a random dog and save the good ones. The list is stored on the
 				server in <code className="rounded bg-muted px-1">server/db.json</code>{" "}
-				— reload the page and they're still there.
+				— reload the page and they're still there (once you finish the
+				exercise).
 			</p>
 
 			<Card className="mb-8 overflow-hidden bg-black">
 				<CardContent className="p-3">
-					{dogQuery.isPending ? (
+					{dog.isPending ? (
 						<div className="flex h-64 items-center justify-center text-muted-foreground">
 							Loading…
 						</div>
-					) : dogQuery.isError ? (
+					) : dog.isError ? (
 						<div className="flex h-64 items-center justify-center text-destructive">
-							Error: {dogQuery.error.message}
+							Error loading dog
 						</div>
-					) : (
+					) : dog.data ? (
 						<img
-							src={dogQuery.data}
+							src={dog.data}
 							alt="A random dog"
 							className="h-64 w-full object-contain"
 						/>
+					) : (
+						<div className="flex h-64 items-center justify-center text-muted-foreground">
+							No dog yet — wire useQuery in step 1.
+						</div>
 					)}
 					<div className="mt-3 flex gap-2">
 						<Button
 							variant="outline"
 							className="flex-1"
-							onClick={() => dogQuery.refetch()}
-							disabled={dogQuery.isFetching}
+							onClick={onPickNext}
+							disabled /* TODO: drop once dogQuery is wired */
 						>
-							<RefreshCw
-								className={dogQuery.isFetching ? "animate-spin" : ""}
-							/>
+							<RefreshCw />
 							Next dog
 						</Button>
 						<Button
 							className="flex-1"
-							onClick={() => {
-								if (dogQuery.data) add.mutate(dogQuery.data);
-							}}
-							disabled={!dogQuery.data || add.isPending || isSaved}
+							onClick={onSave}
+							disabled /* TODO: drop once add.mutate is wired */
 						>
 							<Heart className={isSaved ? "fill-current" : ""} />
 							{isSaved ? "Saved" : "Save to favorites"}
@@ -120,12 +129,8 @@ function ExercisePage() {
 			</Card>
 
 			<h2 className="mb-3 text-xl font-semibold">Saved ({favorites.length})</h2>
-			{favoritesQuery.isPending ? (
+			{favoritesPending ? (
 				<div className="text-muted-foreground">Loading favorites…</div>
-			) : favoritesQuery.isError ? (
-				<div className="text-destructive">
-					Error: {favoritesQuery.error.message}
-				</div>
 			) : favorites.length === 0 ? (
 				<div className="text-muted-foreground">
 					Nothing saved yet. Click "Save to favorites" above.
@@ -144,8 +149,8 @@ function ExercisePage() {
 									variant="outline"
 									size="sm"
 									className="mt-2 w-full"
-									onClick={() => remove.mutate(url)}
-									disabled={remove.isPending}
+									onClick={() => onRemove(url)}
+									disabled /* TODO: drop once remove.mutate is wired */
 								>
 									<X />
 									Remove
