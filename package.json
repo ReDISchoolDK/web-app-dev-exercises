@@ -12,7 +12,8 @@
     "format": "biome format",
     "check": "biome check",
     "prepare": "husky",
-    "update-docs-index": "tsx scripts/update-agents-index.ts"
+    "update-docs-index": "tsx scripts/update-agents-index.ts",
+    "dev:server": "tsx watch server/index.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
@@ -24,6 +25,7 @@
     "@tanstack/router-plugin": "^1.168.27",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "express": "^5.2.1",
     "immer": "^11.1.16",
     "lucide-react": "^1.30.0",
     "react": "^19.2.8",
@@ -37,6 +39,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.5.7",
     "@tanstack/react-query-devtools": "^5.101.4",
+    "@types/express": "^5.0.6",
     "@types/node": "^22.20.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",

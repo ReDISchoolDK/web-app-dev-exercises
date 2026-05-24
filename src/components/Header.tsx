@@ -15,7 +15,12 @@ export default function Header() {
 					>
 						Home
 					</Link>
-					{/* Add your own routes here */}
+					<Link
+						to="/exercise/dog-favorites"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Dog favorites
+					</Link>
 				</nav>
 			</div>
 		</header>

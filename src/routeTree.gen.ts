@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExerciseDogFavoritesIndexRouteImport } from './routes/exercise/dog-favorites/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExerciseDogFavoritesIndexRoute =
+  ExerciseDogFavoritesIndexRouteImport.update({
+    id: '/exercise/dog-favorites/',
+    path: '/exercise/dog-favorites/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/exercise/dog-favorites/': typeof ExerciseDogFavoritesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/exercise/dog-favorites': typeof ExerciseDogFavoritesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/exercise/dog-favorites/': typeof ExerciseDogFavoritesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/exercise/dog-favorites/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/exercise/dog-favorites'
+  id: '__root__' | '/' | '/exercise/dog-favorites/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExerciseDogFavoritesIndexRoute: typeof ExerciseDogFavoritesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/exercise/dog-favorites/': {
+      id: '/exercise/dog-favorites/'
+      path: '/exercise/dog-favorites'
+      fullPath: '/exercise/dog-favorites/'
+      preLoaderRoute: typeof ExerciseDogFavoritesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExerciseDogFavoritesIndexRoute: ExerciseDogFavoritesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
