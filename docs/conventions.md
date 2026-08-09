@@ -42,7 +42,13 @@ description: Coding conventions for this project — component patterns, styling
 
 - Biome: tab indentation, double quotes
 - Biome also owns JSON/JSONC — `tsconfig.json`, `wrangler.jsonc`,
-  `components.json`, `biome.json` and `.vscode/*`. `package.json` and the
+  `components.json`, `biome.jsonc` and `.vscode/*`. `package.json` and the
   lockfiles are left to their tools, so VS Code's built-in JSON formatter
   handles those
+- `src/components/ui/` (shadcn) is **excluded** from Biome on purpose. Those
+  components are vendored upstream code and fail the recommended rules —
+  `label.tsx` trips `a11y/noLabelWithoutControl`, `field.tsx` trips
+  `a11y/useSemanticElements` and `suspicious/noDoubleEquals`. Don't re-add
+  the folder; it breaks `pnpm check` and CI on any branch that has run
+  `shadcn add`
 - Run `pnpm check` before committing

@@ -16,7 +16,7 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.biome": "explicit",
 		// Separate action from fixAll — needed for the organizeImports assist
-		// enabled in biome.json.
+		// enabled in biome.jsonc.
 		"source.organizeImports.biome": "explicit"
 	},
 
