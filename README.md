@@ -1,5 +1,8 @@
 # Exercise: React Query
 
+> **You are on the solution branch.** This is the answer key. To do the
+> exercise yourself, switch to `exercise-react-query-step-1` first.
+
 Keep this file open while you work.
 
 You'll build three small things in one app. Each one teaches one new idea about React Query.
