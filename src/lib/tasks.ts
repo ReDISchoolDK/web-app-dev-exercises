@@ -25,7 +25,7 @@ const API_URL = "https://jsonplaceholder.typicode.com";
  * you ask for a path that doesn't exist.
  */
 export async function createTask(title: string): Promise<Task> {
-	const response = await fetch(`${API_URL}/todos`, {
+	const response = await fetch(`${API_URL}/todoss`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ title, completed: false }),

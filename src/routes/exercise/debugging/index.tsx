@@ -1,26 +1,25 @@
 // =====================================================================
-// SOLUTION — Step 1: the task list
+// STEP 1 — The task list crashes.
 //
-// The bug on the exercise branch: useState() was called with no initial
-// value, so `tasks` was undefined and `tasks.map(...)` threw.
+// Load http://localhost:5173/exercise/debugging and open the Console.
+// Read the error. Then use Sources to set a breakpoint on the line it
+// names, reload, and hover the variable to see what it really holds.
 //
-// Tools: Console (read the error) + Sources (set a breakpoint).
+// The fix is one line. It is not the line that throws.
 // =====================================================================
 
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { INITIAL_TASKS, type Task } from "@/lib/tasks";
+import type { Task } from "@/lib/tasks";
 
 export const Route = createFileRoute("/exercise/debugging/")({
 	component: TaskListPage,
 });
 
 function TaskListPage() {
-	// The fix: give useState an initial value. Without one it returns
-	// undefined, and undefined has no .map().
-	const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
+	const [tasks, setTasks] = useState<Task[]>();
 
 	function toggle(id: number) {
 		setTasks((current) =>
@@ -34,7 +33,7 @@ function TaskListPage() {
 		<div className="mx-auto max-w-2xl p-8">
 			<h1 className="mb-2 text-3xl font-bold">Tasks</h1>
 			<p className="mb-6 text-muted-foreground">
-				Step 1 — the page crashed before it could render anything.
+				Step 1 — this page crashes before it can render anything.
 			</p>
 
 			<div className="flex flex-col gap-3">

@@ -1,16 +1,14 @@
 // =====================================================================
-// SOLUTION — Step 3: stats
+// STEP 3 — The filter buttons do nothing.
 //
-// The bug on the exercise branch: the useEffect that recalculated the
-// visible tasks had an empty dependency array, so it ran once on mount and
-// never again. Clicking a filter changed `filter` in state, but `visible`
-// stayed frozen at whatever it was on the first render.
+// Clicking "done" or "todo" should change the count and the list. It
+// doesn't.
 //
-// Tool: React DevTools → Components → this component's state. You can watch
-// `filter` change while `visible` does not.
+// Open React DevTools -> Components, select StatsPage, and watch its
+// state while you click. One value updates. One doesn't.
 //
-// The fix below adds `filter` to the dependency array. See the README
-// stretch for the better fix — deleting the effect entirely.
+// When you've fixed it, read the "better fix" stretch in the README —
+// there's a change that makes this bug impossible to write.
 // =====================================================================
 
 import { createFileRoute } from "@tanstack/react-router";
@@ -34,15 +32,14 @@ function StatsPage() {
 	const [visible, setVisible] = useState<Task[]>([]);
 
 	useEffect(() => {
-		// `filter` is read inside the effect, so it belongs in the deps.
 		setVisible(applyFilter(INITIAL_TASKS, filter));
-	}, [filter]);
+	}, []);
 
 	return (
 		<div className="mx-auto max-w-2xl p-8">
 			<h1 className="mb-2 text-3xl font-bold">Stats</h1>
 			<p className="mb-6 text-muted-foreground">
-				Step 3 — the count never changed when you picked a different filter.
+				Step 3 — the count never changes when you pick a different filter.
 			</p>
 
 			<div className="mb-6 flex gap-2">

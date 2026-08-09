@@ -1,8 +1,5 @@
 # Exercise: Debugging React
 
-> **You are on the solution branch.** All three bugs are already fixed. To do
-> the exercise yourself, switch to `exercise-debugging` first.
-
 Keep this file open while you work.
 
 You will fix three bugs in a small task-manager app. One bug per page, and each one needs a different tool. By the end you'll have used the whole debugging method.
