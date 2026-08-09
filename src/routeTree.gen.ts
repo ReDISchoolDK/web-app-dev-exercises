@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExerciseBookmarksIndexRouteImport } from './routes/exercise/bookmarks/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExerciseBookmarksIndexRoute = ExerciseBookmarksIndexRouteImport.update({
+  id: '/exercise/bookmarks/',
+  path: '/exercise/bookmarks/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/exercise/bookmarks/': typeof ExerciseBookmarksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/exercise/bookmarks': typeof ExerciseBookmarksIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/exercise/bookmarks/': typeof ExerciseBookmarksIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/exercise/bookmarks/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/exercise/bookmarks'
+  id: '__root__' | '/' | '/exercise/bookmarks/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExerciseBookmarksIndexRoute: typeof ExerciseBookmarksIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/exercise/bookmarks/': {
+      id: '/exercise/bookmarks/'
+      path: '/exercise/bookmarks'
+      fullPath: '/exercise/bookmarks/'
+      preLoaderRoute: typeof ExerciseBookmarksIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExerciseBookmarksIndexRoute: ExerciseBookmarksIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

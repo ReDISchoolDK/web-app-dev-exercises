@@ -1,156 +1,160 @@
-# Web App Dev Exercises
+# Exercise: Zustand + Immer — Bookmarks
 
-This is the starter template for building web apps, and the home of the course exercises. It comes with everything set up so you can jump straight into writing features instead of spending hours configuring tools.
+> **You are on the solution branch.** This is the answer key. If you want to
+> do the exercise yourself, switch to `exercise-bookmarks` first.
 
-To create your own project from this template, click **Use this template** on GitHub.
+You will build a bookmarks page. You can add a bookmark, star it as a
+favorite, and delete it. All of that state lives in one **Zustand store**,
+and you'll use the **Immer middleware** so you can update the state by
+writing what looks like normal mutation.
 
-## Exercises
+**Don't read ahead.** Do the steps in order. Hints are there for when you get
+stuck — read them when you need them, not before.
 
-The `main` branch is the clean template. Each exercise lives on its own branch, with a `README.md` on the branch explaining what to build:
+---
 
-| Branch | Topic |
-| ------ | ----- |
-| `exercise-react-query-step-1` … `-step-3` | TanStack Query: `useQuery`, query keys, Zustand integration |
-| `exercise-use-local-storage` | Writing a custom `useLocalStorage` hook |
-| `exercise-express-json` | A small Express + JSON API |
-| `exercise-bookmarks` | Zustand + Immer store design |
-| `exercise-login` | Forms: TanStack Form + Zod validation |
-| `exercise-debugging` | Finding bugs with Console, Network and React DevTools |
+## Setup
 
-Every exercise has a matching `-solution` branch with the answer key. Start one with:
+You should be on the branch `exercise-bookmarks`. Check with:
 
-```bash
-git checkout exercise-react-query-step-1
+```
+git status
+```
+
+Then:
+
+```
 pnpm install
 pnpm dev
 ```
 
-## How To
+Open <http://localhost:5173/exercise/bookmarks>.
 
-- **Add a new page** — Create a file in `src/routes/`. The file name becomes the URL path (e.g. `src/routes/about.tsx` → `/about`). See `src/routes/index.tsx` for a working example.
-- **Add a UI component** — Run `pnpm dlx shadcn@latest add button` (swap `button` for any component name). It gets copied into `src/components/ui/`. Browse all components at [ui.shadcn.com](https://ui.shadcn.com/docs/components).
-- **Fetch data from an API** — Use TanStack Query's `useQuery` hook. See `src/lib/api.ts` for an example.
-- **Share state between components** — Use a Zustand store. See `src/stores/example.ts` for the pattern.
-- **Use environment variables** — Copy `.env.example` to `.env`. Variables must start with `VITE_` to be available in your app.
+The page and the form are already built for you. Two files matter tonight:
 
-## Scripts
+| File | What you do to it |
+| ---- | ----------------- |
+| `src/stores/bookmarks.ts` | Write the store. This is the real exercise. |
+| `src/routes/exercise/bookmarks/index.tsx` | Connect the page to your store. |
 
-| Command          | What it does                           |
-| ---------------- | -------------------------------------- |
-| `pnpm dev`       | Start the development server           |
-| `pnpm build`     | Build the app for production           |
-| `pnpm preview`   | Preview the production build locally   |
-| `pnpm check`     | Run the linter and formatter (Biome)   |
-| `pnpm typecheck` | Check for TypeScript errors            |
+---
 
+## Background: why Immer?
 
-## What's Inside
+A Zustand store must be updated **immutably** — you never change the old
+state, you produce a new one. For a list of objects that gets noisy fast.
 
-Here's every major tool in this project and what it does.
+To flip one boolean on one item, plain Zustand makes you rebuild the array
+and the object:
 
-### React
-
-React is a JavaScript library for building user interfaces. Instead of writing raw HTML that updates the whole page, you write small, reusable **components** (like a button, a form, or a card) and React efficiently updates only the parts of the page that change.
-
-Docs: [react.dev](https://react.dev/learn)
-
-### TypeScript
-
-TypeScript is JavaScript with **types**. Types tell your editor (and your teammates) what kind of data a variable holds — is it a string? A number? An array of objects? This catches bugs before you even run your code. Every `.tsx` and `.ts` file in this project uses TypeScript.
-
-Docs: [typescriptlang.org](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-
-### Vite
-
-Vite (pronounced "veet") is the **build tool** that runs your app during development and bundles it for production. When you run `pnpm dev`, Vite starts a local server and instantly refreshes the browser whenever you save a file. It's extremely fast.
-
-Docs: [vite.dev](https://vite.dev/guide/)
-
-### Tailwind CSS
-
-Tailwind is a **CSS framework** that lets you style elements using short utility classes directly in your HTML/JSX. Instead of writing a separate CSS file with `.card { padding: 16px; border-radius: 8px; }`, you write `<div className="p-4 rounded-lg">`. It keeps your styles right next to the elements they apply to.
-
-Docs: [tailwindcss.com](https://tailwindcss.com/docs)
-
-### shadcn/ui
-
-shadcn is a **component library** — a collection of pre-built UI pieces like buttons, dialogs, dropdowns, and more. Unlike most component libraries, shadcn copies the component source code into your project (into `src/components/ui/`), so you own it and can customize it however you want.
-
-Docs: [ui.shadcn.com](https://ui.shadcn.com/docs)
-
-### TanStack Router
-
-TanStack Router handles **navigation** between pages. It uses **file-based routing**, which means every file you create in the `src/routes/` folder automatically becomes a page in your app. For example, `src/routes/about.tsx` becomes the `/about` page. No manual route configuration needed.
-
-Docs: [tanstack.com/router](https://tanstack.com/router/latest/docs/framework/react/overview)
-
-### TanStack Query
-
-TanStack Query (also called React Query) manages **data fetching**. It handles loading states, error states, caching, and background refetching for you. Instead of writing `useState` + `useEffect` + error handling every time you fetch data, you call `useQuery` and it takes care of everything.
-
-Docs: [tanstack.com/query](https://tanstack.com/query/latest/docs/framework/react/overview)
-
-### Zustand
-
-Zustand (German for "state") is a **state management** library. When multiple components need to share the same data (like a logged-in user or a shopping cart), you put that data in a Zustand store. Any component can read from or write to the store, and they'll all stay in sync.
-
-Docs: [zustand.docs.pmnd.rs](https://zustand.docs.pmnd.rs/getting-started/introduction)
-
-### Biome
-
-Biome is a **linter and formatter**. A linter checks your code for common mistakes and bad patterns. A formatter makes your code look consistent (indentation, spacing, semicolons, etc.). Biome does both, and it runs automatically every time you save a file in VS Code and every time you commit code.
-
-Docs: [biomejs.dev](https://biomejs.dev/guides/getting-started/)
-
-### Husky + lint-staged
-
-Husky runs **git hooks** — scripts that execute automatically at certain points in your git workflow. In this project, Husky runs Biome on every file you're about to commit (using lint-staged to target only the changed files). This prevents badly formatted or buggy code from getting into the repository.
-
-Docs: [typicode.github.io/husky](https://typicode.github.io/husky/) · [lint-staged](https://github.com/lint-staged/lint-staged)
-
-### pnpm
-
-pnpm is a **package manager**, like npm or yarn, but faster and more disk-efficient. You use it to install libraries (`pnpm install`), add new ones (`pnpm add some-library`), and run scripts (`pnpm dev`).
-
-Docs: [pnpm.io](https://pnpm.io/motivation)
-
-### Cloudflare
-
-When you're ready to put your app on the internet, it gets deployed to **Cloudflare** as a Worker serving static assets. The `wrangler.jsonc` file contains the deployment configuration, including `not_found_handling: "single-page-application"` — that's what makes deep links like `/about` work when someone opens them directly or hits reload. Cloudflare is fast, free for small projects, and handles all the server stuff for you.
-
-Docs: [developers.cloudflare.com/workers/static-assets](https://developers.cloudflare.com/workers/static-assets/)
-
-### GitHub Actions
-
-GitHub Actions is a **CI/CD** (continuous integration / continuous deployment) tool. Every time you open a pull request, it automatically runs checks — linting, type checking, and building your app — to make sure nothing is broken before your code gets merged.
-
-Docs: [docs.github.com/actions](https://docs.github.com/en/actions/quickstart)
-
-## Quick Start
-
-```bash
-pnpm install
-pnpm dev
+```ts
+set((state) => ({
+  bookmarks: state.bookmarks.map((b) =>
+    b.id === id ? { ...b, isFavorite: !b.isFavorite } : b,
+  ),
+}));
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+With the Immer middleware you get a **draft** you can write to directly, and
+Immer produces the new immutable state for you:
 
-## Project Structure
+```ts
+set((state) => {
+  const bookmark = state.bookmarks.find((b) => b.id === id);
+  if (bookmark) bookmark.isFavorite = !bookmark.isFavorite;
+});
+```
+
+Same result. Much easier to read. That's the whole point of this exercise.
+
+---
+
+## Step 1 — Shape the store
+
+Open `src/stores/bookmarks.ts`.
+
+A bookmark is:
+
+```ts
+{ id: string; title: string; url: string; isFavorite: boolean }
+```
+
+Create the store with the `immer` middleware and give it a `bookmarks` array
+that starts empty.
+
+💡 The middleware wraps your initializer:
+`create<BookmarksStore>()(immer((set) => ({ ... })))`. Note the extra `()`
+after `create<...>` — that's required when you use middleware.
+
+💡 Import it from `zustand/middleware/immer`.
+
+---
+
+## Step 2 — `add`
+
+Add an action that takes `{ title, url }` and appends a new bookmark.
+
+- Generate the id with `crypto.randomUUID()`
+- New bookmarks start with `isFavorite: false`
+
+💡 With Immer you can call `state.bookmarks.push(...)` directly.
+
+---
+
+## Step 3 — `toggleFavorite`
+
+Add an action that takes an `id` and flips `isFavorite` on **that bookmark
+only**.
+
+💡 `find` the bookmark, then assign to its property.
+
+💡 If nothing happens, check that you're comparing `b.id === id` and not
+comparing the whole object.
+
+---
+
+## Step 4 — `remove`
+
+Add an action that takes an `id` and deletes that bookmark.
+
+💡 `filter` already returns a new array, so this one looks the same with or
+without Immer. Assign the result back onto the draft.
+
+---
+
+## Step 5 — Wire up the page
+
+Open `src/routes/exercise/bookmarks/index.tsx` and connect it:
+
+- Read `bookmarks`, `add`, `toggleFavorite` and `remove` from the store
+- On submit, call `add` and then clear both inputs
+- The heart button calls `toggleFavorite`, the trash button calls `remove`
+
+Note that the two text inputs stay as `useState`. They belong to this one
+component, so they are **not** store state. Only share what actually needs
+sharing.
+
+---
+
+## Done when
+
+- [ ] Adding a bookmark shows it in the list and clears the form
+- [ ] The heart toggles only the bookmark you clicked
+- [ ] The trash removes only the bookmark you clicked
+- [ ] The empty state appears again once you delete the last one
+- [ ] `pnpm typecheck` and `pnpm check` are clean
+
+## Stuck?
+
+The answer key is on `exercise-bookmarks-solution`:
 
 ```
-src/
-├── components/
-│   ├── ui/          # shadcn components (don't edit directly)
-│   └── Header.tsx   # Navigation bar
-├── lib/
-│   ├── api.ts       # API helpers
-│   └── utils.ts     # Utility functions
-├── routes/
-│   ├── __root.tsx   # Root layout (wraps all pages)
-│   └── index.tsx    # Home page (/)
-├── stores/
-│   └── example.ts   # Example Zustand store (replace with your own)
-├── main.tsx         # App entry point
-├── router.tsx       # Router setup
-└── index.css        # Global styles and theme
+git diff exercise-bookmarks-solution -- src/stores/bookmarks.ts
 ```
+
+## Going further
+
+- Add a "favorites only" filter. Should that be store state or local state?
+- Persist the list across reloads with Zustand's `persist` middleware, or
+  with the `useLocalStorage` hook from the `exercise-use-local-storage`
+  exercise.
