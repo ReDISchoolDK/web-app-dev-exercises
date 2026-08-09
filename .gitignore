@@ -13,6 +13,7 @@ todos.json
 .agents/skills/*
 !.agents/skills/add-documentation/
 !.agents/skills/git-commit/
+!.agents/skills/pull-request-draft/
 .claude/skills
 .cursor/skills
 .codex/skills
