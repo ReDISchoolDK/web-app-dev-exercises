@@ -1,156 +1,508 @@
-# Web App Dev Exercises
+# Exercise: Express + JSON + React Query — Dog Favorites
 
-This is the starter template for building web apps, and the home of the course exercises. It comes with everything set up so you can jump straight into writing features instead of spending hours configuring tools.
+> **You are on the solution branch.** This is the answer key. To do the
+> exercise yourself, switch to `exercise-express-json` first.
 
-To create your own project from this template, click **Use this template** on GitHub.
+Keep this file open while you work.
 
-## Exercises
+You will build a tiny backend with Express that saves data to a JSON file. Then you will read and update that data from React using TanStack Query. By the end you'll have a page where you save your favorite dogs — and they're still there when you reload.
 
-The `main` branch is the clean template. Each exercise lives on its own branch, with a `README.md` on the branch explaining what to build:
+**Don't read ahead.** Do the steps in order. Hints are there for when you get stuck — read them when you need them, not before.
 
-| Branch | Topic |
-| ------ | ----- |
-| `exercise-react-query-step-1` … `-step-3` | TanStack Query: `useQuery`, query keys, Zustand integration |
-| `exercise-use-local-storage` | Writing a custom `useLocalStorage` hook |
-| `exercise-express-json` | A small Express + JSON API |
-| `exercise-bookmarks` | Zustand + Immer store design |
-| `exercise-login` | Forms: TanStack Form + Zod validation |
-| `exercise-debugging` | Finding bugs with Console, Network and React DevTools |
+---
 
-Every exercise has a matching `-solution` branch with the answer key. Start one with:
+## Setup
 
-```bash
-git checkout exercise-react-query-step-1
-pnpm install
+You should be on the branch `exercise-express-json`. Check with:
+
+```
+git status
+```
+
+If you see `On branch exercise-express-json`, you're set. The Express skeleton, the UI, and the client fetch helpers are already wired. You only have to fill in the two pieces that matter: the server handlers and the React Query calls.
+
+**You need two terminals.** One runs the website. The other runs your backend.
+
+Terminal 1:
+
+```
 pnpm dev
 ```
 
-## How To
-
-- **Add a new page** — Create a file in `src/routes/`. The file name becomes the URL path (e.g. `src/routes/about.tsx` → `/about`). See `src/routes/index.tsx` for a working example.
-- **Add a UI component** — Run `pnpm dlx shadcn@latest add button` (swap `button` for any component name). It gets copied into `src/components/ui/`. Browse all components at [ui.shadcn.com](https://ui.shadcn.com/docs/components).
-- **Fetch data from an API** — Use TanStack Query's `useQuery` hook. See `src/lib/api.ts` for an example.
-- **Share state between components** — Use a Zustand store. See `src/stores/example.ts` for the pattern.
-- **Use environment variables** — Copy `.env.example` to `.env`. Variables must start with `VITE_` to be available in your app.
-
-## Scripts
-
-| Command          | What it does                           |
-| ---------------- | -------------------------------------- |
-| `pnpm dev`       | Start the development server           |
-| `pnpm build`     | Build the app for production           |
-| `pnpm preview`   | Preview the production build locally   |
-| `pnpm check`     | Run the linter and formatter (Biome)   |
-| `pnpm typecheck` | Check for TypeScript errors            |
-
-
-## What's Inside
-
-Here's every major tool in this project and what it does.
-
-### React
-
-React is a JavaScript library for building user interfaces. Instead of writing raw HTML that updates the whole page, you write small, reusable **components** (like a button, a form, or a card) and React efficiently updates only the parts of the page that change.
-
-Docs: [react.dev](https://react.dev/learn)
-
-### TypeScript
-
-TypeScript is JavaScript with **types**. Types tell your editor (and your teammates) what kind of data a variable holds — is it a string? A number? An array of objects? This catches bugs before you even run your code. Every `.tsx` and `.ts` file in this project uses TypeScript.
-
-Docs: [typescriptlang.org](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-
-### Vite
-
-Vite (pronounced "veet") is the **build tool** that runs your app during development and bundles it for production. When you run `pnpm dev`, Vite starts a local server and instantly refreshes the browser whenever you save a file. It's extremely fast.
-
-Docs: [vite.dev](https://vite.dev/guide/)
-
-### Tailwind CSS
-
-Tailwind is a **CSS framework** that lets you style elements using short utility classes directly in your HTML/JSX. Instead of writing a separate CSS file with `.card { padding: 16px; border-radius: 8px; }`, you write `<div className="p-4 rounded-lg">`. It keeps your styles right next to the elements they apply to.
-
-Docs: [tailwindcss.com](https://tailwindcss.com/docs)
-
-### shadcn/ui
-
-shadcn is a **component library** — a collection of pre-built UI pieces like buttons, dialogs, dropdowns, and more. Unlike most component libraries, shadcn copies the component source code into your project (into `src/components/ui/`), so you own it and can customize it however you want.
-
-Docs: [ui.shadcn.com](https://ui.shadcn.com/docs)
-
-### TanStack Router
-
-TanStack Router handles **navigation** between pages. It uses **file-based routing**, which means every file you create in the `src/routes/` folder automatically becomes a page in your app. For example, `src/routes/about.tsx` becomes the `/about` page. No manual route configuration needed.
-
-Docs: [tanstack.com/router](https://tanstack.com/router/latest/docs/framework/react/overview)
-
-### TanStack Query
-
-TanStack Query (also called React Query) manages **data fetching**. It handles loading states, error states, caching, and background refetching for you. Instead of writing `useState` + `useEffect` + error handling every time you fetch data, you call `useQuery` and it takes care of everything.
-
-Docs: [tanstack.com/query](https://tanstack.com/query/latest/docs/framework/react/overview)
-
-### Zustand
-
-Zustand (German for "state") is a **state management** library. When multiple components need to share the same data (like a logged-in user or a shopping cart), you put that data in a Zustand store. Any component can read from or write to the store, and they'll all stay in sync.
-
-Docs: [zustand.docs.pmnd.rs](https://zustand.docs.pmnd.rs/getting-started/introduction)
-
-### Biome
-
-Biome is a **linter and formatter**. A linter checks your code for common mistakes and bad patterns. A formatter makes your code look consistent (indentation, spacing, semicolons, etc.). Biome does both, and it runs automatically every time you save a file in VS Code and every time you commit code.
-
-Docs: [biomejs.dev](https://biomejs.dev/guides/getting-started/)
-
-### Husky + lint-staged
-
-Husky runs **git hooks** — scripts that execute automatically at certain points in your git workflow. In this project, Husky runs Biome on every file you're about to commit (using lint-staged to target only the changed files). This prevents badly formatted or buggy code from getting into the repository.
-
-Docs: [typicode.github.io/husky](https://typicode.github.io/husky/) · [lint-staged](https://github.com/lint-staged/lint-staged)
-
-### pnpm
-
-pnpm is a **package manager**, like npm or yarn, but faster and more disk-efficient. You use it to install libraries (`pnpm install`), add new ones (`pnpm add some-library`), and run scripts (`pnpm dev`).
-
-Docs: [pnpm.io](https://pnpm.io/motivation)
-
-### Cloudflare
-
-When you're ready to put your app on the internet, it gets deployed to **Cloudflare** as a Worker serving static assets. The `wrangler.jsonc` file contains the deployment configuration, including `not_found_handling: "single-page-application"` — that's what makes deep links like `/about` work when someone opens them directly or hits reload. Cloudflare is fast, free for small projects, and handles all the server stuff for you.
-
-Docs: [developers.cloudflare.com/workers/static-assets](https://developers.cloudflare.com/workers/static-assets/)
-
-### GitHub Actions
-
-GitHub Actions is a **CI/CD** (continuous integration / continuous deployment) tool. Every time you open a pull request, it automatically runs checks — linting, type checking, and building your app — to make sure nothing is broken before your code gets merged.
-
-Docs: [docs.github.com/actions](https://docs.github.com/en/actions/quickstart)
-
-## Quick Start
-
-```bash
-pnpm install
-pnpm dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-## Project Structure
+Terminal 2:
 
 ```
-src/
-├── components/
-│   ├── ui/          # shadcn components (don't edit directly)
-│   └── Header.tsx   # Navigation bar
-├── lib/
-│   ├── api.ts       # API helpers
-│   └── utils.ts     # Utility functions
-├── routes/
-│   ├── __root.tsx   # Root layout (wraps all pages)
-│   └── index.tsx    # Home page (/)
-├── stores/
-│   └── example.ts   # Example Zustand store (replace with your own)
-├── main.tsx         # App entry point
-├── router.tsx       # Router setup
-└── index.css        # Global styles and theme
+pnpm dev:server
+```
+
+Leave both running for the whole exercise.
+
+**Open four things side by side:**
+
+1. This file (`README.md`)
+2. `server/index.ts` — your backend (filled in during Part A)
+3. `src/routes/exercise/dog-favorites/index.tsx` — your frontend (filled in during Part B)
+4. The browser at `http://localhost:5173/exercise/dog-favorites`
+
+Also keep **DevTools → Network** open in the browser. You will watch real HTTP requests fly between the frontend and your server. The TanStack Query Devtools panel (bottom-right of the page) should also stay open the whole time.
+
+---
+
+## What you're building
+
+A page with two parts. Pick a random dog. Click "Save to favorites." It's saved. Reload the page — still there. Click "Remove" — gone.
+
+The list lives in a file on disk: `server/db.json`. The frontend never touches that file. It asks the backend for it.
+
+---
+
+## The picture
+
+```
+Browser (React)         Express server      Disk
+   useQuery   ──GET───►  /api/favorites  ──►  server/db.json
+   useMutation ──POST──►                 ──►  (writes)
+   useMutation ──DELETE►                 ──►  (writes)
+```
+
+Three HTTP routes. One file. React Query handles the back-and-forth and keeps the screen in sync.
+
+---
+
+## Pair format
+
+- **Driver** — writes the code.
+- **Navigator** — reads this file out loud and tells the driver what's next.
+
+The instructor will call a swap about 10 minutes in. The navigator's job is real: read the file, watch the screen, catch typos, ask "what does that line do?" If the navigator is quiet, only one person is working. Talk.
+
+---
+
+# 🛑 STOP
+
+## Wait for the demo before you start coding.
+
+The instructor will demo first. **Laptops closed.** Watch. Then come back to this file.
+
+---
+
+# Part A — Build the API
+
+Write the three Express handlers in `server/index.ts`. They read and write `server/db.json`.
+
+**Read aloud (navigator):** "Part A — we build the backend. Three routes: GET, POST, DELETE. They all read or write one JSON file."
+
+## File to edit
+
+`server/index.ts`
+
+## What's already there
+
+- `readDb()` — reads `server/db.json` and gives you back `{ favorites: [...] }`.
+- `writeDb(db)` — writes the same shape back to disk.
+- `express.json()` middleware — parses JSON request bodies into `req.body` for you.
+- Three handler stubs that return `501 Not Implemented`. You'll replace those bodies.
+
+You will NOT write any `fetch`, any `fs` calls, or any middleware. The setup is done. You're filling in three handler bodies.
+
+## Step 1 — GET /api/favorites
+
+The smallest possible loop: ask the server for the list, get an array back.
+
+### Do this
+
+1. Open `server/index.ts`.
+2. Find the `app.get("/api/favorites", ...)` handler.
+3. Replace the body so it reads the db and responds with the favorites array.
+
+### Code to write
+
+```ts
+app.get("/api/favorites", async (_req, res) => {
+	const db = await readDb();
+	res.json(db.favorites);
+});
+```
+
+### How you know it's working (navigator: tick these out loud)
+
+In Terminal 2 you should see `api on http://localhost:8787`. In a third terminal, run:
+
+```
+curl http://localhost:8787/api/favorites
+```
+
+- [ ] You see `[]` — an empty array. The server read the file and gave it back.
+
+If you get `501`, you didn't save. If you get an error, check Terminal 2 for a stack trace.
+
+## Step 2 — POST /api/favorites
+
+Save a URL to the list. The frontend will send `{ "url": "..." }` as a JSON body.
+
+### Do this
+
+1. Find the `app.post(...)` handler.
+2. Pull `url` out of `req.body`. If it's missing, respond with a `400`.
+3. Read the db, push the URL onto `favorites` (skip if it's already there).
+4. Write the db back.
+5. Respond with the updated favorites array.
+
+### Code to write
+
+```ts
+app.post("/api/favorites", async (req, res) => {
+	const { url } = req.body as { url?: string };
+	if (!url) {
+		res.status(400).json({ error: "url is required" });
+		return;
+	}
+	const db = await readDb();
+	if (!db.favorites.includes(url)) db.favorites.push(url);
+	await writeDb(db);
+	res.json(db.favorites);
+});
+```
+
+### How you know it's working
+
+```
+curl -X POST http://localhost:8787/api/favorites \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://images.dog.ceo/breeds/proof/test.jpg"}'
+```
+
+- [ ] You see `["https://images.dog.ceo/breeds/proof/test.jpg"]`.
+- [ ] Open `server/db.json` — the URL is in there.
+- [ ] Run the curl again. The array still has just one entry, not two. (Dedup works.)
+- [ ] `curl -X POST http://localhost:8787/api/favorites -H "Content-Type: application/json" -d '{}'` returns a `400`.
+
+## Step 3 — DELETE /api/favorites
+
+Same shape as POST, but remove instead of add.
+
+### Do this
+
+1. Find the `app.delete(...)` handler.
+2. Same body shape: read `url` from `req.body`, `400` if missing.
+3. Filter the URL out of `db.favorites`.
+4. Write the db back. Respond with the updated array.
+
+### Code to write
+
+```ts
+app.delete("/api/favorites", async (req, res) => {
+	const { url } = req.body as { url?: string };
+	if (!url) {
+		res.status(400).json({ error: "url is required" });
+		return;
+	}
+	const db = await readDb();
+	db.favorites = db.favorites.filter((f) => f !== url);
+	await writeDb(db);
+	res.json(db.favorites);
+});
+```
+
+### How you know it's working
+
+```
+curl -X DELETE http://localhost:8787/api/favorites \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://images.dog.ceo/breeds/proof/test.jpg"}'
+```
+
+- [ ] You see `[]`.
+- [ ] `server/db.json` is back to `{ "favorites": [] }`.
+
+You can also delete the `void readDb; void writeDb;` lines near the top of the file. They were only there to keep TypeScript quiet while the handlers were empty.
+
+## 💡 Hint — what is `express.json()`?
+
+A piece of code that runs before every handler. It reads the raw request body (which arrives as bytes), parses it as JSON, and puts the result on `req.body`. Without it, `req.body` is `undefined`.
+
+You don't have to call it yourself. It's already mounted at the top of the file: `app.use(express.json())`. That's why `const { url } = req.body` works.
+
+## 💡 Hint — what is `tsx watch`?
+
+`tsx` runs TypeScript files directly (no separate build step). `tsx watch` re-runs the file every time it changes. So every time you save `server/index.ts`, the server restarts. Watch Terminal 2 — you'll see `[tsx] change ... Restarting...` each time.
+
+If the server doesn't seem to pick up your changes, look at Terminal 2 for an error. A syntax error stops the restart.
+
+## 💡 Hint — why is the parameter `_req` instead of `req` in the GET handler?
+
+The underscore tells TypeScript "I know I'm not using this, please don't complain." GET doesn't need the request — no body, no parameters — so we mark it as ignored. POST and DELETE do use `req.body`, so they get the plain name `req`.
+
+## 💡 Hint — why `res.status(400)...; return;` and not `return res.status(400)...`?
+
+Both work. Express handlers don't care what you return. Doing them on two lines makes it obvious that you're (1) sending a response and (2) bailing out so the rest of the function doesn't run.
+
+---
+
+# 🛑 STOP
+
+## Part A is done. Check in with your instructor before starting Part B.
+
+Show that:
+
+- All three `curl` commands work.
+- `server/db.json` updates when you POST and DELETE.
+
+---
+
+# Part B — Wire it to React Query
+
+Now make the page use the API you just built. The UI is already there — buttons, layout, loading states. Your job is to replace the placeholder values and no-op handlers with real React Query calls.
+
+**Read aloud (navigator):** "Part B — we wire the page to the backend. React Query reads the list with `useQuery`, and updates it with two `useMutation` calls."
+
+## File to edit
+
+`src/routes/exercise/dog-favorites/index.tsx`
+
+## What's already there
+
+- The full UI: a card with the dog image, two action buttons, the saved-favorites grid.
+- Placeholder values: `dog`, `favorites`, `isSaved`. You'll replace these with real query state.
+- No-op handlers: `onPickNext`, `onSave`, `onRemove`. You'll replace these with mutation calls.
+
+You will NOT write any `fetch` code or layout. Just the React Query calls.
+
+## Step 1 — Read the data with `useQuery`
+
+Load the random dog and the favorites list. Both use the same hook, just with different query functions.
+
+### Do this
+
+1. Uncomment all the imports at the top of the file (the `// import { useMutation ...` and `// import { addFavorite ...` blocks). You will use all of them by the end of Part B.
+2. Delete the placeholder block:
+
+   ```tsx
+   const dog: { ... } = { isPending: false, isError: false };
+   const favorites: string[] = [];
+   const favoritesPending = false;
+   ```
+
+3. Replace it with two `useQuery` calls.
+4. Wire `onPickNext` to refetch the dog query.
+5. Update the JSX to use `dogQuery` (and friends) instead of the placeholders. Drop the `disabled` flag on the "Next dog" button — replace it with `disabled={dogQuery.isFetching}`.
+
+### Code to write
+
+```tsx
+const dogQuery = useQuery({
+	queryKey: ["randomDog"],
+	queryFn: fetchRandomDog,
+});
+
+const favoritesQuery = useQuery({
+	queryKey: ["favorites"],
+	queryFn: getFavorites,
+});
+
+const favorites = favoritesQuery.data ?? [];
+
+const onPickNext = () => dogQuery.refetch();
+```
+
+And update the dog card JSX to read from `dogQuery`:
+
+```tsx
+{dogQuery.isPending ? (
+	<div className="...">Loading…</div>
+) : dogQuery.isError ? (
+	<div className="...">Error: {dogQuery.error.message}</div>
+) : (
+	<img src={dogQuery.data} alt="A random dog" className="..." />
+)}
+```
+
+And the favorites grid uses `favoritesQuery.isPending` instead of `favoritesPending`.
+
+### How you know it's working
+
+- [ ] A random dog image appears on the page.
+- [ ] "Saved (0)" shows up — the favorites query returned the empty array from your server.
+- [ ] Open the TanStack Query Devtools (bottom-right). You see two queries: `["randomDog"]` and `["favorites"]`.
+- [ ] Open DevTools → Network. You see one request to `/api/favorites` returning `200`.
+- [ ] Click "Next dog". A new image loads.
+
+## Step 2 — Save with `useMutation`
+
+Add a new favorite to the list. Reads don't change data — `useQuery` is fine for that. Writes do change data — that's what `useMutation` is for.
+
+### Do this
+
+1. Grab the query client at the top of the component.
+2. Add a `useMutation` for adding a favorite.
+3. Compute `isSaved` from the real data instead of `false`.
+4. Wire the `onSave` handler.
+5. Drop the `disabled` flag on the Save button. Replace it with a real condition.
+
+### Code to write
+
+```tsx
+const qc = useQueryClient();
+
+const add = useMutation({
+	mutationFn: addFavorite,
+	onSuccess: () => qc.invalidateQueries({ queryKey: ["favorites"] }),
+});
+
+const isSaved =
+	dogQuery.data !== undefined && favorites.includes(dogQuery.data);
+
+const onSave = () => {
+	if (dogQuery.data) add.mutate(dogQuery.data);
+};
+```
+
+Update the Save button:
+
+```tsx
+<Button
+	className="flex-1"
+	onClick={onSave}
+	disabled={!dogQuery.data || add.isPending || isSaved}
+>
+	<Heart className={isSaved ? "fill-current" : ""} />
+	{isSaved ? "Saved" : "Save to favorites"}
+</Button>
+```
+
+### How you know it's working
+
+- [ ] Click "Save to favorites". The button text changes to "Saved" and the heart fills in.
+- [ ] The saved dog appears in the "Saved (1)" grid below.
+- [ ] Network tab shows a `POST /api/favorites`, then a `GET /api/favorites` right after. That second request is the **invalidation** — React Query asking for fresh data.
+- [ ] `server/db.json` has the URL in it.
+- [ ] **Reload the page.** The favorite is still there. (This is the whole point of the exercise.)
+
+## Step 3 — Remove with `useMutation`
+
+Same shape as the save mutation, but for delete. This step is about proving you understand the pattern — mutation + invalidation — by writing a second one.
+
+### Do this
+
+1. Add a second `useMutation` for removing a favorite.
+2. Wire the `onRemove` handler.
+3. Drop the `disabled` flag on each Remove button. Replace it with `disabled={remove.isPending}`.
+
+### Code to write
+
+```tsx
+const remove = useMutation({
+	mutationFn: removeFavorite,
+	onSuccess: () => qc.invalidateQueries({ queryKey: ["favorites"] }),
+});
+
+const onRemove = (url: string) => remove.mutate(url);
+```
+
+### How you know it's working
+
+- [ ] Click "Remove" on a saved dog. It disappears from the grid.
+- [ ] Network tab shows `DELETE /api/favorites`, then `GET /api/favorites`.
+- [ ] `server/db.json` no longer has that URL.
+- [ ] No red errors in the browser console.
+
+## 💡 Hint — what is a query key?
+
+The first argument to `useQuery` is the `queryKey`. It's an array of values that uniquely names the query. React Query uses it as the cache key — anywhere else in your app that uses the same key, it shares the same data.
+
+`["randomDog"]` and `["favorites"]` are two separate keys. They cache and refetch independently.
+
+When you call `qc.invalidateQueries({ queryKey: ["favorites"] })`, React Query says: "Mark any query with that key as stale, and refetch any that's currently on screen." That's why the grid updates after a mutation — the favorites query refetches automatically.
+
+## 💡 Hint — `useMutation` vs `useQuery`
+
+- `useQuery` is for **reads**. It runs automatically when the component mounts, retries on failure, and caches the result.
+- `useMutation` is for **writes**. It doesn't run automatically — you call `.mutate(value)` when the user clicks a button. After it finishes, you usually want to invalidate the related query so the UI shows the change.
+
+If you find yourself calling `useQuery` for something that changes the server, you want `useMutation` instead.
+
+## 💡 Hint — why invalidate instead of updating the cache by hand?
+
+You could do this after the POST:
+
+```tsx
+onSuccess: (newList) => qc.setQueryData(["favorites"], newList),
+```
+
+That works. The server returns the updated list, so you set it directly.
+
+But invalidation is safer:
+
+- The server is the source of truth. If anything else changed it (another tab, a background job), `setQueryData` would miss it.
+- The pattern is the same for every mutation: invalidate the key. You don't have to think about how to merge.
+
+Use invalidation unless you have a clear reason not to. Optimistic updates are an advanced topic — come back to them later.
+
+## 💡 Hint — the page shows "Loading…" forever
+
+Check the browser console for an error. The most common causes:
+
+1. Your server isn't running. Look at Terminal 2 — should say `api on http://localhost:8787`.
+2. A handler still returns `501`. The fetcher throws. Open the Network tab and find the failing request.
+3. You returned the wrong shape. `getFavorites` expects a JSON array. If your handler responded with `db` (the whole object) instead of `db.favorites`, the frontend breaks.
+
+## 💡 Hint — what's the `/api` proxy thing?
+
+In `vite.config.ts`:
+
+```ts
+server: {
+	proxy: { "/api": "http://localhost:8787" },
+},
+```
+
+This tells the dev server (Vite, on port 5173) to forward any request that starts with `/api` to your Express server (on port 8787). That's why the frontend can call `fetch("/api/favorites")` instead of the full `http://localhost:8787/api/favorites` URL — and why there's no CORS error.
+
+You don't have to touch this. It's just here so it's not magic.
+
+---
+
+## Stretch — only if you finish early
+
+### Stretch 1 — favorites count in the header
+
+Add a `useQuery({ queryKey: ["favorites"], queryFn: getFavorites })` call to `src/components/Header.tsx`. Show the count next to the "Dog favorites" link. Notice how it updates by itself when you save or remove a favorite — that's the **shared cache key** in action. Two components, one query, one source of truth.
+
+### Stretch 2 — handle the duplicate-save case in the UI
+
+Right now the Save button gets disabled when `isSaved` is true. But the server also dedups — if you POSTed the same URL twice somehow, it wouldn't add it twice. What if you instead made the button **unsave** when the current dog is already saved? Same button, opposite action depending on `isSaved`. Wire `remove.mutate(dogQuery.data)` for that case.
+
+### Stretch 3 — add a "saved at" timestamp
+
+Change the data shape on disk from `string[]` to `{ url: string; savedAt: number }[]`. The frontend shows "saved 2 minutes ago." You'll touch the server, the fetchers in `src/lib/api.ts`, and the component. This is closer to what a real feature looks like — small change in the data model, ripples through the whole stack.
+
+---
+
+# Done
+
+You did two things:
+
+1. Built a tiny Express API that persists data to a JSON file (Part A).
+2. Wired that API into React using **`useQuery` for reads** and **`useMutation` + invalidation for writes** (Part B).
+
+That's the basic shape of every real app. The "backend" is code somewhere that owns the data and exposes HTTP routes. The "frontend" reads and changes that data through those routes. React Query manages the in-between — caching, refetching, keeping the UI in sync.
+
+## What we did not cover
+
+- **Authentication** — anyone who can reach your server can change the data. Real apps lock that down.
+- **A real database** — flat JSON files are fine for demos and tiny side projects. Postgres or SQLite is the next step.
+- **Optimistic updates** — updating the cache before the server confirms, then rolling back on error. Snappier UX, more code.
+- **Error handling and retries** — React Query retries failed queries by default, but mutation errors need handling in the UI.
+- **Deployment** — this whole setup is dev-only. Putting an Express server in production has its own checklist.
+
+## Want to see the finished version?
+
+```
+git checkout exercise-express-json-solution
+```
+
+Compare the diff to your code. Then jump back to your branch:
+
+```
+git checkout exercise-express-json
 ```
