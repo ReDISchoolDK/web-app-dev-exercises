@@ -1,0 +1,7 @@
+{
+	// VS Code shows these under "Recommended" in the Extensions panel.
+	// Biome is required — without it, format-on-save does nothing.
+	"recommendations": ["biomejs.biome", "bradlc.vscode-tailwindcss"],
+	// Prettier would fight Biome over formatting. Don't use it here.
+	"unwantedRecommendations": ["esbenp.prettier-vscode"]
+}

@@ -7,10 +7,9 @@
 
 body {
 	@apply m-0;
-	font-family:
-		-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif;
+	/* Font family comes from `html { @apply font-sans }` in the base layer
+	   below, which resolves to --font-sans (Geist Variable). Don't set
+	   font-family here — a rule on body beats the value inherited from html. */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }

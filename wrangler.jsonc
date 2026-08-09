@@ -1,8 +1,11 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "web-app-dev-starter",
-  "compatibility_date": "2026-04-03",
-  "assets": {
-    "directory": "dist"
-  }
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "web-app-dev-exercises",
+	"compatibility_date": "2026-04-03",
+	"assets": {
+		"directory": "dist",
+		// Client-side routes must resolve to index.html instead of 404ing
+		// on direct navigation and reloads.
+		"not_found_handling": "single-page-application"
+	}
 }

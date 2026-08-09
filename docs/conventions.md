@@ -41,4 +41,8 @@ description: Coding conventions for this project — component patterns, styling
 ## Formatting
 
 - Biome: tab indentation, double quotes
+- Biome also owns JSON/JSONC — `tsconfig.json`, `wrangler.jsonc`,
+  `components.json`, `biome.json` and `.vscode/*`. `package.json` and the
+  lockfiles are left to their tools, so VS Code's built-in JSON formatter
+  handles those
 - Run `pnpm check` before committing

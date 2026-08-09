@@ -1,9 +1,29 @@
-# Web App Dev Starter
+# Web App Dev Exercises
 
-This is a starter template for building web apps. It comes with everything set up so you can jump straight into writing features instead of spending hours configuring tools.
+This is the starter template for building web apps, and the home of the course exercises. It comes with everything set up so you can jump straight into writing features instead of spending hours configuring tools.
 
 To create your own project from this template, click **Use this template** on GitHub.
 
+## Exercises
+
+The `main` branch is the clean template. Each exercise lives on its own branch, with a `README.md` on the branch explaining what to build:
+
+| Branch | Topic |
+| ------ | ----- |
+| `exercise-react-query-step-1` … `-step-3` | TanStack Query: `useQuery`, query keys, Zustand integration |
+| `exercise-use-local-storage` | Writing a custom `useLocalStorage` hook |
+| `exercise-express-json` | A small Express + JSON API |
+| `exercise-bookmarks` | Zustand store design |
+| `exercise-login` | Forms and protected routes |
+| `exercise-debug` | Debugging practice |
+
+Every exercise has a matching `-solution` branch with the answer key. Start one with:
+
+```bash
+git checkout exercise-react-query-step-1
+pnpm install
+pnpm dev
+```
 
 ## How To
 
@@ -94,11 +114,11 @@ pnpm is a **package manager**, like npm or yarn, but faster and more disk-effici
 
 Docs: [pnpm.io](https://pnpm.io/motivation)
 
-### Cloudflare Pages
+### Cloudflare
 
-When you're ready to put your app on the internet, it gets deployed to **Cloudflare Pages**. The `wrangler.jsonc` file contains the deployment configuration. Cloudflare is fast, free for small projects, and handles all the server stuff for you.
+When you're ready to put your app on the internet, it gets deployed to **Cloudflare** as a Worker serving static assets. The `wrangler.jsonc` file contains the deployment configuration, including `not_found_handling: "single-page-application"` — that's what makes deep links like `/about` work when someone opens them directly or hits reload. Cloudflare is fast, free for small projects, and handles all the server stuff for you.
 
-Docs: [developers.cloudflare.com/pages](https://developers.cloudflare.com/pages/)
+Docs: [developers.cloudflare.com/workers/static-assets](https://developers.cloudflare.com/workers/static-assets/)
 
 ### GitHub Actions
 
@@ -122,7 +142,6 @@ src/
 ├── components/
 │   ├── ui/          # shadcn components (don't edit directly)
 │   └── Header.tsx   # Navigation bar
-├── data/            # Static data files
 ├── lib/
 │   ├── api.ts       # API helpers
 │   └── utils.ts     # Utility functions

@@ -1,18 +1,20 @@
-# Web App Dev Starter
+# Web App Dev Exercises
 
 You are an AI acting as a senior developer working on a web app project. When responding to the user, always use 10th grade language and be concise.
 
+This repo is both the course **template** (`main`) and the course **exercises** (the `exercise-*` branches).
+
 ## Stack
 
-- React 19 + TypeScript
-- Vite 6
+- React 19 + TypeScript 6
+- Vite 8
 - Tailwind CSS v4 (CSS-based config, no tailwind.config.js)
-- Shadcn/ui
+- Shadcn/ui (Base UI primitives)
 - TanStack Router (file-based routing)
 - TanStack Query v5 (server state)
 - Zustand + Immer (client state)
 - Biome (lint + format)
-- Cloudflare Pages (deployment)
+- Cloudflare Workers static assets (deployment)
 
 ## Commands
 
