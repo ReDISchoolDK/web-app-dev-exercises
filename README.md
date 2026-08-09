@@ -13,9 +13,9 @@ The `main` branch is the clean template. Each exercise lives on its own branch, 
 | `exercise-react-query-step-1` … `-step-3` | TanStack Query: `useQuery`, query keys, Zustand integration |
 | `exercise-use-local-storage` | Writing a custom `useLocalStorage` hook |
 | `exercise-express-json` | A small Express + JSON API |
-| `exercise-bookmarks` | Zustand store design |
-| `exercise-login` | Forms and protected routes |
-| `exercise-debug` | Debugging practice |
+| `exercise-bookmarks` | Zustand + Immer store design |
+| `exercise-login` | Forms: TanStack Form + Zod validation |
+| `exercise-debugging` | Finding bugs with Console, Network and React DevTools |
 
 Every exercise has a matching `-solution` branch with the answer key. Start one with:
 
