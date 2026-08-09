@@ -1,8 +1,5 @@
 # Exercise: Forms — Login with TanStack Form + Zod
 
-> **You are on the solution branch.** This is the answer key. To do the
-> exercise yourself, switch to `exercise-login` first.
-
 Keep this file open while you work.
 
 You will build a login form. It checks that the email looks like an email and that the password is long enough. It shows errors only after someone leaves a field, and it keeps the submit button disabled until everything is valid. When the form is submitted, the email goes into a **Zustand store** so the rest of the app knows who is signed in.

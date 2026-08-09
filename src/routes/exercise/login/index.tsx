@@ -1,24 +1,27 @@
 // =====================================================================
-// SOLUTION — Login page (TanStack Form + Zod + Zustand)
+// EXERCISE — Login page (TanStack Form + Zod + Zustand)
 //
 // Goal: A login form that validates on blur and, on submit, records the
 // email in a shared Zustand store.
 //
 // Success criteria:
-//   [x] Email must look like an email, password must be 8+ characters
-//   [x] Errors appear on blur, not on every keystroke
-//   [x] The submit button is disabled while the form is invalid
-//   [x] After submit the page swaps to a "Logged in" view
-//   [x] Log out returns you to the form
+//   [ ] Email must look like an email, password must be 8+ characters
+//   [ ] Errors appear on blur, not on every keystroke
+//   [ ] The submit button is disabled while the form is invalid
+//   [ ] After submit the page swaps to a "Logged in" view
+//   [ ] Log out returns you to the form
+//
+// 💡 Every input needs onBlur={field.handleBlur}, or onBlur validation
+//    never runs and the button never enables.
 //
 // Navigator's reading:
 //   https://tanstack.com/form/latest/docs/framework/react/quick-start
 //   https://zod.dev/
 // =====================================================================
 
-import { useForm } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
+// TODO(step 3): import useForm from "@tanstack/react-form"
+// TODO(step 2): import { z } from "zod"
 import { Button } from "@/components/ui/button";
 import {
 	Field,
@@ -33,43 +36,23 @@ export const Route = createFileRoute("/exercise/login/")({
 	component: LoginPage,
 });
 
-// The schema is the single source of truth for what "valid" means.
-// TanStack Form runs it for you — you never write if-statements per field.
-const loginSchema = z.object({
-	email: z.email("Enter a valid email"),
-	password: z.string().min(8, "At least 8 characters"),
-});
+// TODO(step 2): describe what "valid" means with a Zod schema.
+//   email    — must be a valid email, message "Enter a valid email"
+//   password — at least 8 characters, message "At least 8 characters"
+// In Zod 4 it's z.email(...), not z.string().email(...).
 
 function LoginPage() {
-	const { loggedInEmail, setLoggedIn, logout } = useAuthStore();
+	// TODO(step 3): also pull `setLoggedIn` out of the store — you'll need it
+	// in the form's onSubmit.
+	const { loggedInEmail, logout } = useAuthStore();
 
-	const form = useForm({
-		defaultValues: {
-			email: "",
-			password: "",
-		},
-		validators: {
-			// onBlur, not onChange: don't shout at people while they type.
-			onBlur: loginSchema,
-		},
-		onSubmit: async ({ value }) => {
-			setLoggedIn(value.email);
-		},
-	});
+	// TODO(step 3): create the form with useForm.
+	//   defaultValues: { email: "", password: "" }
+	//   validators: { onBlur: loginSchema }
+	//   onSubmit: ({ value }) => setLoggedIn(value.email)
 
-	if (loggedInEmail) {
-		return (
-			<div className="mx-auto max-w-sm p-8">
-				<h1 className="mb-2 text-3xl font-bold">Logged in</h1>
-				<p className="mb-6 text-muted-foreground">
-					Signed in as <span className="font-medium">{loggedInEmail}</span>
-				</p>
-				<Button variant="outline" onClick={logout}>
-					Log out
-				</Button>
-			</div>
-		);
-	}
+	// TODO(step 6): when loggedInEmail is set, return a "Logged in" view with
+	// the email and a Log out button instead of the form below.
 
 	return (
 		<div className="mx-auto max-w-sm p-8">
@@ -79,70 +62,42 @@ function LoginPage() {
 				Zustand store.
 			</p>
 
-			<form
-				onSubmit={(e) => {
-					// The browser would reload the page otherwise.
-					e.preventDefault();
-					form.handleSubmit();
-				}}
-			>
+			{/*
+				TODO(step 4): replace the two plain fields below with <form.Field>
+				wrappers so TanStack Form owns the values and the touched state.
+				Each Input needs value, onChange, onBlur and aria-invalid.
+
+				TODO(step 5): wrap the button in <form.Subscribe> and disable it
+				while the form can't be submitted.
+
+				Remember e.preventDefault() in onSubmit, then form.handleSubmit().
+			*/}
+			<form onSubmit={(e) => e.preventDefault()}>
 				<FieldGroup>
-					<form.Field name="email">
-						{(field) => {
-							const invalid =
-								field.state.meta.isTouched && !field.state.meta.isValid;
-							return (
-								<Field data-invalid={invalid}>
-									<FieldLabel htmlFor={field.name}>Email</FieldLabel>
-									<Input
-										id={field.name}
-										name={field.name}
-										type="email"
-										value={field.state.value}
-										onBlur={field.handleBlur}
-										onChange={(e) => field.handleChange(e.target.value)}
-										aria-invalid={invalid}
-									/>
-									{invalid && <FieldError errors={field.state.meta.errors} />}
-								</Field>
-							);
-						}}
-					</form.Field>
+					<Field>
+						<FieldLabel htmlFor="email">Email</FieldLabel>
+						<Input id="email" name="email" type="email" readOnly />
+						<FieldError errors={[]} />
+					</Field>
 
-					<form.Field name="password">
-						{(field) => {
-							const invalid =
-								field.state.meta.isTouched && !field.state.meta.isValid;
-							return (
-								<Field data-invalid={invalid}>
-									<FieldLabel htmlFor={field.name}>Password</FieldLabel>
-									<Input
-										id={field.name}
-										name={field.name}
-										type="password"
-										value={field.state.value}
-										onBlur={field.handleBlur}
-										onChange={(e) => field.handleChange(e.target.value)}
-										aria-invalid={invalid}
-									/>
-									{invalid && <FieldError errors={field.state.meta.errors} />}
-								</Field>
-							);
-						}}
-					</form.Field>
+					<Field>
+						<FieldLabel htmlFor="password">Password</FieldLabel>
+						<Input id="password" name="password" type="password" readOnly />
+						<FieldError errors={[]} />
+					</Field>
 
-					{/* Subscribe re-renders only this button, not the whole form. */}
-					<form.Subscribe
-						selector={(state) => [state.canSubmit, state.isSubmitting]}
-					>
-						{([canSubmit, isSubmitting]) => (
-							<Button type="submit" disabled={!canSubmit}>
-								{isSubmitting ? "Logging in..." : "Log in"}
-							</Button>
-						)}
-					</form.Subscribe>
+					<Button type="submit" disabled>
+						Log in
+					</Button>
 				</FieldGroup>
 			</form>
+
+			<p className="mt-6 text-sm text-muted-foreground">
+				Signed in as: {loggedInEmail ?? "nobody yet"} ·{" "}
+				<button type="button" className="underline" onClick={logout}>
+					log out
+				</button>
+			</p>
 		</div>
 	);
 }
