@@ -17,7 +17,7 @@ Before creating a new file:
 
 ## Step 2 — Create the file
 
-All docs live directly in `docs/` — no subfolders. Skills live separately in `.agents/skills/`.
+All docs live directly in `docs/` — no subfolders. Skills live separately in `.claude/skills/`.
 
 ### File naming
 

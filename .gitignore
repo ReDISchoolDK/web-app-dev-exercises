@@ -8,12 +8,6 @@ count.txt
 .tanstack
 todos.json
 
-# Agent skills — community skills installed via postinstall, never committed
-# Custom skills (add-documentation, git-commit) are tracked
-.agents/skills/*
-!.agents/skills/add-documentation/
-!.agents/skills/git-commit/
-!.agents/skills/pull-request-draft/
-.claude/skills
-.cursor/skills
-.codex/skills
+# Agent skills live in .claude/skills/ and ARE committed — they're part of
+# the project. There is no install step; Claude Code reads that folder
+# directly. Don't add an installer back.

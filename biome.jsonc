@@ -24,8 +24,7 @@
 			// which needs field.tsx and label.tsx. Re-adding this folder breaks
 			// `pnpm check` and CI on any branch that has run `shadcn add`.
 			"!**/src/components/ui/**/*",
-			"!**/src/index.css",
-			"!.agents/**/*"
+			"!**/src/index.css"
 		]
 	},
 	"formatter": {

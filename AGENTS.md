@@ -29,7 +29,7 @@ This repo is both the course **template** (`main`) and the course **exercises** 
 
 Read `docs/` for project conventions, domain context, patterns, and deployment info.
 
-Use skills when relevant to the task. Search the skills directory for relevant skills and only read and  use the ones that are relevant to the task. They have frontmatter that describes what they do and when to use them. Never read skills whose frontmatter indicates they are not relevant to the task at hand.
+Use skills when relevant to the task. They live in `.claude/skills/`, one folder per skill with a `SKILL.md` inside. Search that directory and only read the ones relevant to the task — each has frontmatter describing what it does and when to use it. Never read skills whose frontmatter indicates they are not relevant to the task at hand.
 
 When framework APIs are involved, prefer fetching current docs over relying on pre-trained knowledge:
 
