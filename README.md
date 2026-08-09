@@ -1,8 +1,5 @@
 # Exercise: Zustand + Immer — Bookmarks
 
-> **You are on the solution branch.** This is the answer key. To do the
-> exercise yourself, switch to `exercise-bookmarks` first.
-
 Keep this file open while you work.
 
 You will build a bookmarks page. You can add a bookmark, star it as a favorite, and delete it. All of that state lives in one **Zustand store**, and you'll use the **Immer middleware** so you can update state by writing what looks like normal mutation.

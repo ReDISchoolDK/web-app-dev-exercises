@@ -1,19 +1,20 @@
 // =====================================================================
-// SOLUTION — Bookmarks page
+// EXERCISE — Bookmarks page
 //
-// Goal: Wire a form and a list up to the Zustand store in
+// Goal: Wire the form and the list up to your Zustand store in
 // `src/stores/bookmarks.ts`.
 //
 // Success criteria:
-//   [x] Submitting the form adds a bookmark and clears the inputs
-//   [x] The heart button toggles only the bookmark you clicked
-//   [x] The trash button removes only the bookmark you clicked
-//   [x] The empty state shows when there are no bookmarks
+//   [ ] Submitting the form adds a bookmark and clears the inputs
+//   [ ] The heart button toggles only the bookmark you clicked
+//   [ ] The trash button removes only the bookmark you clicked
+//   [ ] The empty state shows when there are no bookmarks
+//
+// The whole page is already built. Do step 5 here AFTER the store works.
 //
 // Navigator's reading:
 //   https://zustand.docs.pmnd.rs/getting-started/introduction
 // =====================================================================
-
 import { createFileRoute } from "@tanstack/react-router";
 import { Heart, Trash2 } from "lucide-react";
 import { useState } from "react";

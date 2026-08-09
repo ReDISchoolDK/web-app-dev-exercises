@@ -1,22 +1,26 @@
 // =====================================================================
-// SOLUTION — Bookmarks store (Zustand + Immer)
+// EXERCISE — Bookmarks store (Zustand + Immer)
 //
 // Goal: Build a Zustand store that holds a list of bookmarks and can add,
 // favorite and remove them — using Immer so you can "mutate" the draft.
 //
 // Success criteria:
-//   [x] Store holds an array of bookmarks
-//   [x] `add` appends a new bookmark with a generated id
-//   [x] `toggleFavorite` flips `isFavorite` on one bookmark only
-//   [x] `remove` deletes a bookmark by id
-//   [x] No `useState` for the list — the store is the single source of truth
+//   [ ] Store holds an array of bookmarks
+//   [ ] `add` appends a new bookmark with a generated id
+//   [ ] `toggleFavorite` flips `isFavorite` on one bookmark only
+//   [ ] `remove` deletes a bookmark by id
+//   [ ] No `useState` for the list — the store is the single source of truth
+//
+// 💡 Middleware needs the extra `()`:
+//    create<BookmarksStore>()(immer((set) => ({ ... })))
 //
 // Navigator's reading:
 //   https://zustand.docs.pmnd.rs/integrations/immer-middleware
 // =====================================================================
 
 import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+// TODO(step 1): import the Immer middleware
+// import { immer } from "zustand/middleware/immer";
 
 export interface Bookmark {
 	id: string;
@@ -32,39 +36,27 @@ interface BookmarksStore {
 	remove: (id: string) => void;
 }
 
-export const useBookmarksStore = create<BookmarksStore>()(
-	immer((set) => ({
-		bookmarks: [],
+// TODO(step 1): wrap this initializer in the `immer` middleware, then fill in
+// the three actions below.
+//
+// TODO(step 2): `add` — push a new bookmark. Use crypto.randomUUID() for the
+//               id and start with isFavorite: false.
+// TODO(step 3): `toggleFavorite` — find the bookmark by id and flip its
+//               isFavorite. Only that one should change.
+// TODO(step 4): `remove` — filter the bookmark out by id.
+export const useBookmarksStore = create<BookmarksStore>()((set) => ({
+	bookmarks: [],
 
-		// Immer lets you push onto the draft directly. Without it you would
-		// have to spread a whole new array:
-		//   set((state) => ({ bookmarks: [...state.bookmarks, newBookmark] }))
-		add: ({ title, url }) =>
-			set((state) => {
-				state.bookmarks.push({
-					id: crypto.randomUUID(),
-					title,
-					url,
-					isFavorite: false,
-				});
-			}),
+	add: ({ title, url }) => {
+		// Remove this line once you implement the action.
+		console.warn("add() not implemented", { title, url }, set);
+	},
 
-		// This is where Immer really pays off. Without it you rebuild every
-		// item just to flip one boolean:
-		//   bookmarks: state.bookmarks.map((b) =>
-		//     b.id === id ? { ...b, isFavorite: !b.isFavorite } : b,
-		//   )
-		toggleFavorite: (id) =>
-			set((state) => {
-				const bookmark = state.bookmarks.find((b) => b.id === id);
-				if (bookmark) bookmark.isFavorite = !bookmark.isFavorite;
-			}),
+	toggleFavorite: (id) => {
+		console.warn("toggleFavorite() not implemented", id);
+	},
 
-		// filter already returns a new array, so Immer buys you nothing here.
-		// Reassigning the draft is still the clearest way to write it.
-		remove: (id) =>
-			set((state) => {
-				state.bookmarks = state.bookmarks.filter((b) => b.id !== id);
-			}),
-	})),
-);
+	remove: (id) => {
+		console.warn("remove() not implemented", id);
+	},
+}));
