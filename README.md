@@ -1,5 +1,8 @@
 # Exercise: Custom Hook — `useLocalStorage`
 
+> **You are on the solution branch.** This is the answer key. To do the
+> exercise yourself, switch to `exercise-use-local-storage` first.
+
 Keep this file open while you work.
 
 You will build a hook called `useLocalStorage(key, initial)`. It works just like `useState`, but the value also gets saved in the browser. When you reload the page, the value is still there.
