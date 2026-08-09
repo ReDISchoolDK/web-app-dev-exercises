@@ -1,156 +1,335 @@
-# Web App Dev Exercises
+# Exercise: Custom Hook — `useLocalStorage`
 
-This is the starter template for building web apps, and the home of the course exercises. It comes with everything set up so you can jump straight into writing features instead of spending hours configuring tools.
+Keep this file open while you work.
 
-To create your own project from this template, click **Use this template** on GitHub.
+You will build a hook called `useLocalStorage(key, initial)`. It works just like `useState`, but the value also gets saved in the browser. When you reload the page, the value is still there.
 
-## Exercises
+**Don't read ahead.** Do the steps in order. Hints are there for when you get stuck — read them when you need them, not before.
 
-The `main` branch is the clean template. Each exercise lives on its own branch, with a `README.md` on the branch explaining what to build:
+---
 
-| Branch | Topic |
-| ------ | ----- |
-| `exercise-react-query-step-1` … `-step-3` | TanStack Query: `useQuery`, query keys, Zustand integration |
-| `exercise-use-local-storage` | Writing a custom `useLocalStorage` hook |
-| `exercise-express-json` | A small Express + JSON API |
-| `exercise-bookmarks` | Zustand + Immer store design |
-| `exercise-login` | Forms: TanStack Form + Zod validation |
-| `exercise-debugging` | Finding bugs with Console, Network and React DevTools |
+## Setup
 
-Every exercise has a matching `-solution` branch with the answer key. Start one with:
+You should be on the branch `exercise-use-local-storage`. Check with:
 
-```bash
-git checkout exercise-react-query-step-1
+```
+git status
+```
+
+Then:
+
+```
 pnpm install
 pnpm dev
 ```
 
-## How To
+The route, the stub hook, and the UI are already scaffolded. You only have to fill in the hook.
 
-- **Add a new page** — Create a file in `src/routes/`. The file name becomes the URL path (e.g. `src/routes/about.tsx` → `/about`). See `src/routes/index.tsx` for a working example.
-- **Add a UI component** — Run `pnpm dlx shadcn@latest add button` (swap `button` for any component name). It gets copied into `src/components/ui/`. Browse all components at [ui.shadcn.com](https://ui.shadcn.com/docs/components).
-- **Fetch data from an API** — Use TanStack Query's `useQuery` hook. See `src/lib/api.ts` for an example.
-- **Share state between components** — Use a Zustand store. See `src/stores/example.ts` for the pattern.
-- **Use environment variables** — Copy `.env.example` to `.env`. Variables must start with `VITE_` to be available in your app.
+**Open three things side by side:**
 
-## Scripts
+1. This file
+2. `src/hooks/useLocalStorage.ts` — the file you will fill in
+3. The browser at <http://localhost:5173/exercise/use-local-storage>
 
-| Command          | What it does                           |
-| ---------------- | -------------------------------------- |
-| `pnpm dev`       | Start the development server           |
-| `pnpm build`     | Build the app for production           |
-| `pnpm preview`   | Preview the production build locally   |
-| `pnpm check`     | Run the linter and formatter (Biome)   |
-| `pnpm typecheck` | Check for TypeScript errors            |
+Also open **DevTools → Application → Local Storage → http://localhost:5173**. Keep it visible. You will watch the keys appear and update as you go.
 
+---
 
-## What's Inside
+## How the repo is laid out
 
-Here's every major tool in this project and what it does.
+| File | What's already there |
+| ---- | -------------------- |
+| `src/hooks/useLocalStorage.ts` | The hook stub, with TODOs. This is the exercise. |
+| `src/routes/exercise/use-local-storage/index.tsx` | The Counter UI, wired to placeholder values |
 
-### React
+---
 
-React is a JavaScript library for building user interfaces. Instead of writing raw HTML that updates the whole page, you write small, reusable **components** (like a button, a form, or a card) and React efficiently updates only the parts of the page that change.
+## What you're building
 
-Docs: [react.dev](https://react.dev/learn)
+A custom hook with this shape:
 
-### TypeScript
-
-TypeScript is JavaScript with **types**. Types tell your editor (and your teammates) what kind of data a variable holds — is it a string? A number? An array of objects? This catches bugs before you even run your code. Every `.tsx` and `.ts` file in this project uses TypeScript.
-
-Docs: [typescriptlang.org](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-
-### Vite
-
-Vite (pronounced "veet") is the **build tool** that runs your app during development and bundles it for production. When you run `pnpm dev`, Vite starts a local server and instantly refreshes the browser whenever you save a file. It's extremely fast.
-
-Docs: [vite.dev](https://vite.dev/guide/)
-
-### Tailwind CSS
-
-Tailwind is a **CSS framework** that lets you style elements using short utility classes directly in your HTML/JSX. Instead of writing a separate CSS file with `.card { padding: 16px; border-radius: 8px; }`, you write `<div className="p-4 rounded-lg">`. It keeps your styles right next to the elements they apply to.
-
-Docs: [tailwindcss.com](https://tailwindcss.com/docs)
-
-### shadcn/ui
-
-shadcn is a **component library** — a collection of pre-built UI pieces like buttons, dialogs, dropdowns, and more. Unlike most component libraries, shadcn copies the component source code into your project (into `src/components/ui/`), so you own it and can customize it however you want.
-
-Docs: [ui.shadcn.com](https://ui.shadcn.com/docs)
-
-### TanStack Router
-
-TanStack Router handles **navigation** between pages. It uses **file-based routing**, which means every file you create in the `src/routes/` folder automatically becomes a page in your app. For example, `src/routes/about.tsx` becomes the `/about` page. No manual route configuration needed.
-
-Docs: [tanstack.com/router](https://tanstack.com/router/latest/docs/framework/react/overview)
-
-### TanStack Query
-
-TanStack Query (also called React Query) manages **data fetching**. It handles loading states, error states, caching, and background refetching for you. Instead of writing `useState` + `useEffect` + error handling every time you fetch data, you call `useQuery` and it takes care of everything.
-
-Docs: [tanstack.com/query](https://tanstack.com/query/latest/docs/framework/react/overview)
-
-### Zustand
-
-Zustand (German for "state") is a **state management** library. When multiple components need to share the same data (like a logged-in user or a shopping cart), you put that data in a Zustand store. Any component can read from or write to the store, and they'll all stay in sync.
-
-Docs: [zustand.docs.pmnd.rs](https://zustand.docs.pmnd.rs/getting-started/introduction)
-
-### Biome
-
-Biome is a **linter and formatter**. A linter checks your code for common mistakes and bad patterns. A formatter makes your code look consistent (indentation, spacing, semicolons, etc.). Biome does both, and it runs automatically every time you save a file in VS Code and every time you commit code.
-
-Docs: [biomejs.dev](https://biomejs.dev/guides/getting-started/)
-
-### Husky + lint-staged
-
-Husky runs **git hooks** — scripts that execute automatically at certain points in your git workflow. In this project, Husky runs Biome on every file you're about to commit (using lint-staged to target only the changed files). This prevents badly formatted or buggy code from getting into the repository.
-
-Docs: [typicode.github.io/husky](https://typicode.github.io/husky/) · [lint-staged](https://github.com/lint-staged/lint-staged)
-
-### pnpm
-
-pnpm is a **package manager**, like npm or yarn, but faster and more disk-efficient. You use it to install libraries (`pnpm install`), add new ones (`pnpm add some-library`), and run scripts (`pnpm dev`).
-
-Docs: [pnpm.io](https://pnpm.io/motivation)
-
-### Cloudflare
-
-When you're ready to put your app on the internet, it gets deployed to **Cloudflare** as a Worker serving static assets. The `wrangler.jsonc` file contains the deployment configuration, including `not_found_handling: "single-page-application"` — that's what makes deep links like `/about` work when someone opens them directly or hits reload. Cloudflare is fast, free for small projects, and handles all the server stuff for you.
-
-Docs: [developers.cloudflare.com/workers/static-assets](https://developers.cloudflare.com/workers/static-assets/)
-
-### GitHub Actions
-
-GitHub Actions is a **CI/CD** (continuous integration / continuous deployment) tool. Every time you open a pull request, it automatically runs checks — linting, type checking, and building your app — to make sure nothing is broken before your code gets merged.
-
-Docs: [docs.github.com/actions](https://docs.github.com/en/actions/quickstart)
-
-## Quick Start
-
-```bash
-pnpm install
-pnpm dev
+```ts
+const [count, setCount] = useLocalStorage("count", 0);
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Same return shape as `useState`. The difference: `count` survives a page reload, because the hook saves it to `localStorage`.
 
-## Project Structure
+---
+
+## Pair format
+
+- **Driver** — writes the code.
+- **Navigator** — reads this file out loud and tells the driver what's next.
+
+Your instructor will call a swap partway through. The navigator's job is real: read the file, watch the screen, catch typos, ask "what does that line do?" If the navigator is quiet, only one person is working. Talk.
+
+---
+
+# 🛑 STOP
+
+## Wait for the demo before you start coding.
+
+Your instructor will demo first. **Laptops closed.** Watch. Then come back here.
+
+Working through this on your own? Just keep going.
+
+---
+
+# Step 1 — Inline first
+
+Write the Counter using raw `useState` + `useEffect` + `localStorage`. No custom hook yet. You will pull this apart in Step 2.
+
+**Read aloud (navigator):** "Step 1 — we make it work inline. No hook yet. We'll move it into a hook in Step 2."
+
+## File to edit
+
+`src/routes/exercise/use-local-storage/index.tsx`
+
+## Do this
+
+1. Find the line `const count = 0;` in the component.
+2. Replace it with a `useState` call that reads `"count"` from `localStorage` on first render. If the key is missing, fall back to `0`.
+3. Add a `useEffect` that writes `count` to `localStorage` every time it changes.
+4. Wire the `+1` button: `onClick={() => setCount(count + 1)}`. Remove `disabled`.
+5. Save the file.
+
+## Code to write
+
+```tsx
+import { useEffect, useState } from "react";
+
+// Inside the component:
+const [count, setCount] = useState(() => {
+  const stored = localStorage.getItem("count");
+  return stored !== null ? JSON.parse(stored) : 0;
+});
+
+useEffect(() => {
+  localStorage.setItem("count", JSON.stringify(count));
+}, [count]);
+```
+
+## How you know it's working (navigator: tick these out loud)
+
+- [ ] Click `+1`. The number goes up.
+- [ ] Refresh the page. The count is still where you left it.
+- [ ] DevTools → Application → Local Storage shows a `count` entry. Watch it update as you click.
+
+**Don't move on until all three tick.** Ask your instructor if something looks weird.
+
+## 💡 Hint — `localStorage` only stores strings
+
+`localStorage.setItem("count", 3)` actually stores the string `"3"`. That's why we wrap the value with `JSON.stringify` when we write it, and `JSON.parse` when we read it. The value goes in as a number, gets stored as a string, comes back out as a number.
+
+## 💡 Hint — `getItem` returns `null` when the key is missing
+
+If `"count"` has never been set, `localStorage.getItem("count")` returns `null` — not `undefined`. Check for `null` directly. Don't write `stored || 0` — if you ever store an empty string, it's falsy and would also fall back to `0`, overwriting a real value. Use `stored !== null` or the `??` operator instead. Those only fall back when the value is actually missing.
+
+---
+
+# Step 2 — Extract the hook
+
+Now move the Step 1 logic into a custom hook. After this step, the Counter line shrinks to just `useLocalStorage("count", 0)`.
+
+**Read aloud (navigator):** "Step 2 — we pull the logic out of the component and put it in a hook. Same behavior, less code in the component."
+
+## File to edit
+
+`src/hooks/useLocalStorage.ts` — already exists with TODOs. You're going to fill in the body.
+
+Then update `src/routes/exercise/use-local-storage/index.tsx` to call the hook.
+
+## Do this
+
+1. Open `src/hooks/useLocalStorage.ts`.
+2. Replace the `useState<T>(initial)` line with a lazy initializer that reads from `localStorage` and falls back to `initial`.
+3. Wrap `JSON.parse` in `try`/`catch`. If the stored value is bad, fall back to `initial` — don't crash.
+4. Fill in the `useEffect` body: write `value` to `localStorage` under `key`.
+5. The return line `[value, setValue] as const` is already there. Leave it.
+6. Save the file.
+7. Open the route file. Uncomment the import at the top:
+
+   ```tsx
+   import { useLocalStorage } from "@/hooks/useLocalStorage";
+   ```
+
+8. Replace the Step 1 `useState` + `useEffect` block with one line:
+
+   ```tsx
+   const [count, setCount] = useLocalStorage("count", 0);
+   ```
+
+9. Delete the old inline `useEffect` and the now-unused `useState` / `useEffect` imports.
+
+## What `useLocalStorage.ts` ends up looking like
+
+```ts
+import { useEffect, useState } from "react";
+
+export function useLocalStorage<T>(key: string, initial: T) {
+  const [value, setValue] = useState<T>(() => {
+    const stored = localStorage.getItem(key);
+    if (stored === null) return initial;
+    try {
+      return JSON.parse(stored) as T;
+    } catch {
+      // Bad data in storage — fall back, don't crash
+      return initial;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+
+  return [value, setValue] as const;
+}
+```
+
+## How you know it's working
+
+- [ ] The Counter component is short — no `useEffect`, no `localStorage` calls in the component file. Just one line: `useLocalStorage("count", 0)`.
+- [ ] Click `+1`. Refresh. The count still survives.
+- [ ] DevTools shows the `count` key updating — same as Step 1.
+- [ ] No red errors in the browser console.
+
+## 💡 Hint — what is the `<T>` for?
+
+The `<T>` is a **type placeholder**. Whatever type you pass as `initial`, TypeScript uses for the whole hook.
+
+Call `useLocalStorage("count", 0)` and `T` becomes `number`. Call `useLocalStorage("name", "")` and `T` becomes `string`. Same code, different type each time.
+
+Without `<T>`, you'd need a separate hook for each type — `useNumberStorage`, `useStringStorage`, and so on. That's no fun.
+
+## 💡 Hint — why is `useState` wrapped in `() => ...`?
+
+That arrow function is called a **lazy initializer**.
+
+Without it, the code inside runs on every render — even though we only need the starting value once. With the arrow function, React calls it just once, on the very first render, and ignores it after that.
+
+`localStorage.getItem` is cheap, but reading it on every render for no reason is still waste. Use this trick any time the initial value is even slightly expensive to compute.
+
+## 💡 Hint — try/catch the `JSON.parse`
+
+If someone manually edits the value in DevTools, or there's leftover bad data, `JSON.parse` throws. A hook that crashes the whole component on bad data is fragile. Wrap it in `try`/`catch` and fall back to `initial`.
+
+## 💡 Hint — why is `key` in the dep array?
+
+The effect uses both `key` and `value` inside its body. Any value the effect reads from outside has to be in the dep array — that's the rule.
+
+If you only list `value`, the effect won't re-run when `key` changes. That works fine as long as nobody ever passes a different key. But if a parent component ever does, the effect would keep writing to the *old* key.
+
+Biome catches this with the `useExhaustiveDependencies` rule when you run `pnpm check`. Listen to it.
+
+## 💡 Hint — `as const` keeps the return type narrow
+
+The return line `[value, setValue] as const` tells TypeScript "this is a tuple of exactly two things." Without `as const`, the type widens and you can't destructure as `[value, setValue]` cleanly. The stub already has this — just don't delete it.
+
+## 💡 Hint — the dev server didn't pick up my new hook
+
+Save the file. Vite reloads on save. If the page still looks the same, check the browser console for a red error — usually a missing import or a typo in the export name.
+
+---
+
+# Step 3 — Reuse the hook
+
+This is the payoff. Show that the same hook works for a different value with no extra work.
+
+**Read aloud (navigator):** "Step 3 — we call the same hook a second time, with a different key, to prove it's reusable."
+
+## File to edit
+
+`src/routes/exercise/use-local-storage/index.tsx`
+
+## Do this
+
+1. Find `const name = "";` near the top of the component.
+2. Replace it with a second `useLocalStorage` call — different key, string default:
+
+   ```tsx
+   const [name, setName] = useLocalStorage("name", "");
+   ```
+
+3. Wire the input: `onChange={(e) => setName(e.target.value)}`. Remove `readOnly`.
+4. Save.
+
+## How you know it's working
+
+- [ ] Type your name in the input. The greeting updates live.
+- [ ] Click `+1` a few times.
+- [ ] Refresh. Both the name and the count survive.
+- [ ] DevTools → Local Storage shows two entries: `count` and `name`.
+
+That's the point of a custom hook. Same shape, different data, no duplication.
+
+---
+
+## Stretch — only if you finish early
+
+### Stretch 1 — accept an updater function
+
+`useState` lets you pass either a value or a function: `setCount(c => c + 1)`. Your hook only accepts a value right now. Make it accept either.
+
+```tsx
+setCount((c) => c + 1); // should work
+setCount(7); // should also still work
+```
+
+### Stretch 2 — cross-tab sync
+
+Open two tabs of your app side by side. Click `+1` in tab A. Tab B doesn't update. That's because `localStorage` writes don't fire any event in the writing tab — they fire a `storage` event in *other* tabs.
+
+Subscribe to the `storage` event inside your hook with a `useEffect`. When it fires for your key, update the state.
+
+```ts
+useEffect(() => {
+  function onStorage(e: StorageEvent) {
+    if (e.key === key && e.newValue !== null) {
+      try {
+        setValue(JSON.parse(e.newValue) as T);
+      } catch {
+        // ignore
+      }
+    }
+  }
+  window.addEventListener("storage", onStorage);
+  return () => window.removeEventListener("storage", onStorage);
+}, [key]);
+```
+
+Reload both tabs. Click `+1` in tab A. Tab B updates without a reload.
+
+**Modern alternative:** `useSyncExternalStore` is the React-native primitive for subscribing components to an external store like `localStorage`. Overkill here, but the right tool when you need it. Worth knowing the name.
+
+---
+
+# Done
+
+You did three things:
+
+1. Built a feature using `useState` + `useEffect` + `localStorage` inline (Step 1).
+2. **Extracted** that logic into a custom hook (Step 2). The component got shorter and the logic became reusable.
+3. **Reused** the hook for a second value (Step 3) — different key, no duplication.
+
+That's the whole skill. Anywhere in your project where you see the same `useState` + `useEffect` shape twice, ask: *is there a custom hook in here?*
+
+## Want to see the finished version?
 
 ```
-src/
-├── components/
-│   ├── ui/          # shadcn components (don't edit directly)
-│   └── Header.tsx   # Navigation bar
-├── lib/
-│   ├── api.ts       # API helpers
-│   └── utils.ts     # Utility functions
-├── routes/
-│   ├── __root.tsx   # Root layout (wraps all pages)
-│   └── index.tsx    # Home page (/)
-├── stores/
-│   └── example.ts   # Example Zustand store (replace with your own)
-├── main.tsx         # App entry point
-├── router.tsx       # Router setup
-└── index.css        # Global styles and theme
+git checkout exercise-use-local-storage-solution
 ```
+
+Compare the diff to your code. Then jump back to your branch:
+
+```
+git checkout exercise-use-local-storage
+```
+
+## What we did not cover
+
+- **`useMemo`** and **`useCallback`** — for stable references and memoized values.
+- **`useRef`** — for DOM access (focus, scroll, measure) and mutable values that don't trigger re-renders.
+- **`useReducer`** — for complex state updates where multiple values change together.
+- **`useSyncExternalStore`** — the modern primitive for subscribing to external stores. (Touched in Stretch 2.)
+
+These are the next layer. Start with what you learned here.
