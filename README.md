@@ -1,6 +1,6 @@
 # Exercise: Express + JSON + React Query — Dog Favorites
 
-This is your reference for tonight. Keep it open while you pair.
+Keep this file open while you work.
 
 You will build a tiny backend with Express that saves data to a JSON file. Then you will read and update that data from React using TanStack Query. By the end you'll have a page where you save your favorite dogs — and they're still there when you reload.
 
@@ -18,7 +18,7 @@ git status
 
 If you see `On branch exercise-express-json`, you're set. The Express skeleton, the UI, and the client fetch helpers are already wired. You only have to fill in the two pieces that matter: the server handlers and the React Query calls.
 
-**You need two terminals tonight.** One runs the website. The other runs your backend.
+**You need two terminals.** One runs the website. The other runs your backend.
 
 Terminal 1:
 
@@ -477,14 +477,14 @@ Change the data shape on disk from `string[]` to `{ url: string; savedAt: number
 
 # Done
 
-You did two things tonight:
+You did two things:
 
 1. Built a tiny Express API that persists data to a JSON file (Part A).
 2. Wired that API into React using **`useQuery` for reads** and **`useMutation` + invalidation for writes** (Part B).
 
 That's the basic shape of every real app. The "backend" is code somewhere that owns the data and exposes HTTP routes. The "frontend" reads and changes that data through those routes. React Query manages the in-between — caching, refetching, keeping the UI in sync.
 
-## What we did NOT cover tonight
+## What we did not cover
 
 - **Authentication** — anyone who can reach your server can change the data. Real apps lock that down.
 - **A real database** — flat JSON files are fine for demos and tiny side projects. Postgres or SQLite is the next step.
