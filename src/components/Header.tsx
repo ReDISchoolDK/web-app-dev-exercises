@@ -15,6 +15,24 @@ export default function Header() {
 					>
 						Home
 					</Link>
+					<Link
+						to="/exercise/debugging"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Tasks
+					</Link>
+					<Link
+						to="/exercise/debugging/add"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Add
+					</Link>
+					<Link
+						to="/exercise/debugging/stats"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Stats
+					</Link>
 					{/* Add your own routes here */}
 				</nav>
 			</div>

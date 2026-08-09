@@ -1,156 +1,308 @@
-# Web App Dev Exercises
+# Exercise: Debugging React
 
-This is the starter template for building web apps, and the home of the course exercises. It comes with everything set up so you can jump straight into writing features instead of spending hours configuring tools.
+> **You are on the solution branch.** All three bugs are already fixed. To do
+> the exercise yourself, switch to `exercise-debugging` first.
 
-To create your own project from this template, click **Use this template** on GitHub.
+Keep this file open while you work.
 
-## Exercises
+You will fix three bugs in a small task-manager app. One bug per page, and each one needs a different tool. By the end you'll have used the whole debugging method.
 
-The `main` branch is the clean template. Each exercise lives on its own branch, with a `README.md` on the branch explaining what to build:
+**You do not need to guess.** Every bug leaves visible evidence. This file tells you which tool to open and what to look for.
 
-| Branch | Topic |
-| ------ | ----- |
-| `exercise-react-query-step-1` … `-step-3` | TanStack Query: `useQuery`, query keys, Zustand integration |
-| `exercise-use-local-storage` | Writing a custom `useLocalStorage` hook |
-| `exercise-express-json` | A small Express + JSON API |
-| `exercise-bookmarks` | Zustand + Immer store design |
-| `exercise-login` | Forms: TanStack Form + Zod validation |
-| `exercise-debugging` | Finding bugs with Console, Network and React DevTools |
+---
 
-Every exercise has a matching `-solution` branch with the answer key. Start one with:
+## Setup
 
-```bash
-git checkout exercise-react-query-step-1
+You should be on the branch `exercise-debugging`. Check with:
+
+```
+git status
+```
+
+Then:
+
+```
 pnpm install
 pnpm dev
 ```
 
-## How To
+Open <http://localhost:5173/exercise/debugging>.
 
-- **Add a new page** — Create a file in `src/routes/`. The file name becomes the URL path (e.g. `src/routes/about.tsx` → `/about`). See `src/routes/index.tsx` for a working example.
-- **Add a UI component** — Run `pnpm dlx shadcn@latest add button` (swap `button` for any component name). It gets copied into `src/components/ui/`. Browse all components at [ui.shadcn.com](https://ui.shadcn.com/docs/components).
-- **Fetch data from an API** — Use TanStack Query's `useQuery` hook. See `src/lib/api.ts` for an example.
-- **Share state between components** — Use a Zustand store. See `src/stores/example.ts` for the pattern.
-- **Use environment variables** — Copy `.env.example` to `.env`. Variables must start with `VITE_` to be available in your app.
+If you haven't installed **React Developer Tools**, do it now — it takes 30 seconds:
 
-## Scripts
+- Chrome: <https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi>
+- Firefox: <https://addons.mozilla.org/en-US/firefox/addon/react-devtools/>
 
-| Command          | What it does                           |
-| ---------------- | -------------------------------------- |
-| `pnpm dev`       | Start the development server           |
-| `pnpm build`     | Build the app for production           |
-| `pnpm preview`   | Preview the production build locally   |
-| `pnpm check`     | Run the linter and formatter (Biome)   |
-| `pnpm typecheck` | Check for TypeScript errors            |
+After installing, close and reopen DevTools. You should see **⚛ Components** and **⚛ Profiler** tabs.
 
+---
 
-## What's Inside
+## ⚠️ This branch does not pass its own checks — on purpose
 
-Here's every major tool in this project and what it does.
-
-### React
-
-React is a JavaScript library for building user interfaces. Instead of writing raw HTML that updates the whole page, you write small, reusable **components** (like a button, a form, or a card) and React efficiently updates only the parts of the page that change.
-
-Docs: [react.dev](https://react.dev/learn)
-
-### TypeScript
-
-TypeScript is JavaScript with **types**. Types tell your editor (and your teammates) what kind of data a variable holds — is it a string? A number? An array of objects? This catches bugs before you even run your code. Every `.tsx` and `.ts` file in this project uses TypeScript.
-
-Docs: [typescriptlang.org](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-
-### Vite
-
-Vite (pronounced "veet") is the **build tool** that runs your app during development and bundles it for production. When you run `pnpm dev`, Vite starts a local server and instantly refreshes the browser whenever you save a file. It's extremely fast.
-
-Docs: [vite.dev](https://vite.dev/guide/)
-
-### Tailwind CSS
-
-Tailwind is a **CSS framework** that lets you style elements using short utility classes directly in your HTML/JSX. Instead of writing a separate CSS file with `.card { padding: 16px; border-radius: 8px; }`, you write `<div className="p-4 rounded-lg">`. It keeps your styles right next to the elements they apply to.
-
-Docs: [tailwindcss.com](https://tailwindcss.com/docs)
-
-### shadcn/ui
-
-shadcn is a **component library** — a collection of pre-built UI pieces like buttons, dialogs, dropdowns, and more. Unlike most component libraries, shadcn copies the component source code into your project (into `src/components/ui/`), so you own it and can customize it however you want.
-
-Docs: [ui.shadcn.com](https://ui.shadcn.com/docs)
-
-### TanStack Router
-
-TanStack Router handles **navigation** between pages. It uses **file-based routing**, which means every file you create in the `src/routes/` folder automatically becomes a page in your app. For example, `src/routes/about.tsx` becomes the `/about` page. No manual route configuration needed.
-
-Docs: [tanstack.com/router](https://tanstack.com/router/latest/docs/framework/react/overview)
-
-### TanStack Query
-
-TanStack Query (also called React Query) manages **data fetching**. It handles loading states, error states, caching, and background refetching for you. Instead of writing `useState` + `useEffect` + error handling every time you fetch data, you call `useQuery` and it takes care of everything.
-
-Docs: [tanstack.com/query](https://tanstack.com/query/latest/docs/framework/react/overview)
-
-### Zustand
-
-Zustand (German for "state") is a **state management** library. When multiple components need to share the same data (like a logged-in user or a shopping cart), you put that data in a Zustand store. Any component can read from or write to the store, and they'll all stay in sync.
-
-Docs: [zustand.docs.pmnd.rs](https://zustand.docs.pmnd.rs/getting-started/introduction)
-
-### Biome
-
-Biome is a **linter and formatter**. A linter checks your code for common mistakes and bad patterns. A formatter makes your code look consistent (indentation, spacing, semicolons, etc.). Biome does both, and it runs automatically every time you save a file in VS Code and every time you commit code.
-
-Docs: [biomejs.dev](https://biomejs.dev/guides/getting-started/)
-
-### Husky + lint-staged
-
-Husky runs **git hooks** — scripts that execute automatically at certain points in your git workflow. In this project, Husky runs Biome on every file you're about to commit (using lint-staged to target only the changed files). This prevents badly formatted or buggy code from getting into the repository.
-
-Docs: [typicode.github.io/husky](https://typicode.github.io/husky/) · [lint-staged](https://github.com/lint-staged/lint-staged)
-
-### pnpm
-
-pnpm is a **package manager**, like npm or yarn, but faster and more disk-efficient. You use it to install libraries (`pnpm install`), add new ones (`pnpm add some-library`), and run scripts (`pnpm dev`).
-
-Docs: [pnpm.io](https://pnpm.io/motivation)
-
-### Cloudflare
-
-When you're ready to put your app on the internet, it gets deployed to **Cloudflare** as a Worker serving static assets. The `wrangler.jsonc` file contains the deployment configuration, including `not_found_handling: "single-page-application"` — that's what makes deep links like `/about` work when someone opens them directly or hits reload. Cloudflare is fast, free for small projects, and handles all the server stuff for you.
-
-Docs: [developers.cloudflare.com/workers/static-assets](https://developers.cloudflare.com/workers/static-assets/)
-
-### GitHub Actions
-
-GitHub Actions is a **CI/CD** (continuous integration / continuous deployment) tool. Every time you open a pull request, it automatically runs checks — linting, type checking, and building your app — to make sure nothing is broken before your code gets merged.
-
-Docs: [docs.github.com/actions](https://docs.github.com/en/actions/quickstart)
-
-## Quick Start
-
-```bash
-pnpm install
-pnpm dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-## Project Structure
+Run this now, before you start:
 
 ```
-src/
-├── components/
-│   ├── ui/          # shadcn components (don't edit directly)
-│   └── Header.tsx   # Navigation bar
-├── lib/
-│   ├── api.ts       # API helpers
-│   └── utils.ts     # Utility functions
-├── routes/
-│   ├── __root.tsx   # Root layout (wraps all pages)
-│   └── index.tsx    # Home page (/)
-├── stores/
-│   └── example.ts   # Example Zustand store (replace with your own)
-├── main.tsx         # App entry point
-├── router.tsx       # Router setup
-└── index.css        # Global styles and theme
+pnpm typecheck
+pnpm check
 ```
+
+Both fail. That's intended, and it's part of the lesson. Don't "fix" the errors yet — you'll come back to them at the end and see which bugs the tooling could have caught for you before you ever opened a browser.
+
+Every other exercise branch in this repo is green. This one is the exception.
+
+---
+
+## How the repo is laid out
+
+The app is a small task manager. Three pages, one bug each.
+
+| Step | Route | File | Bug | Tool |
+| ---- | ----- | ---- | --- | ---- |
+| 1 | `/exercise/debugging` | `src/routes/exercise/debugging/index.tsx` | Runtime crash | Console + Sources |
+| 2 | `/exercise/debugging/add` | `src/routes/exercise/debugging/add.tsx` | Silent API failure | Network |
+| 3 | `/exercise/debugging/stats` | `src/routes/exercise/debugging/stats.tsx` | Stale state | React DevTools |
+
+Shared data and the API helper live in `src/lib/tasks.ts`. **That file has no bugs** — don't spend time there.
+
+---
+
+## The method
+
+Same four moves every time, whatever the bug:
+
+1. **Reproduce it.** Know exactly which click causes it.
+2. **Read the evidence.** The error, the request, the state. Don't guess from the UI.
+3. **Narrow it down.** Breakpoint, log, or step through until you find the last line that behaves.
+4. **Fix the cause, not the symptom.** Then check the evidence is gone.
+
+---
+
+## Pair format
+
+- **Driver** — writes the code.
+- **Navigator** — reads this file out loud and drives the tools.
+
+Your instructor will call a swap at the start of each step. In this exercise the navigator has the more interesting job: they're the one in DevTools. Swap so both of you get time in there.
+
+---
+
+# 🛑 STOP
+
+## Wait for the demo before you start Step 1.
+
+Your instructor will demo the method first. **Laptops closed.** Watch. Then come back here.
+
+Working through this on your own? Just keep going.
+
+---
+
+# Step 1 — The page crashes
+
+## Route
+
+<http://localhost:5173/exercise/debugging>
+
+## Goal
+
+The task list renders nothing and the console has a red error. Make the list appear.
+
+## Where to look
+
+Open the **Console** tab first. Read the actual error text — the whole line, not just the red colour.
+
+Then open **Sources**, find the file in the file tree on the left, and set a breakpoint on the line the error names. Reload. When it pauses, hover over the variable to see what it actually holds.
+
+## Steps
+
+1. Reproduce: load the page. See the crash.
+2. Read the console error out loud. What is `undefined`? What was called on it?
+3. Open Sources, breakpoint that line, reload.
+4. Hover the variable. Confirm what it is.
+5. Fix it. Reload. The list should render.
+
+## What the bug looks like
+
+```
+TypeError: Cannot read properties of undefined (reading 'map')
+```
+
+Something is `undefined` that should be an array.
+
+## 💡 Hint — where does the value come from?
+
+Look at where `tasks` is created, not where it's used. The crash happens at `.map()`, but the cause is one line earlier.
+
+## 💡 Hint — what does `useState()` return with no argument?
+
+`useState()` with nothing passed in gives you `undefined` as the initial value. Not `[]`. Not `null`. `undefined` — and `undefined.map()` throws.
+
+## How you know it's working
+
+- [ ] The five tasks render.
+- [ ] The console has no red errors.
+- [ ] Clicking **Done** toggles a task and the strike-through appears.
+
+## Stretch (if you finish early)
+
+`pnpm typecheck` catches this one. Run it and read what TypeScript says. Which is faster — the browser or the compiler?
+
+---
+
+# 🛑 STOP
+
+## Wait for the debrief before Step 2.
+
+---
+
+# Step 2 — Saving does nothing
+
+## Route
+
+<http://localhost:5173/exercise/debugging/add>
+
+## Goal
+
+Type a task, press **Save**, and nothing happens. No error. No new task. Find out why.
+
+## Where to look
+
+The **Network** tab. This is the point of this step: the app is silent, but the network is not.
+
+Open Network, tick **Fetch/XHR** to filter, then press Save and watch the row that appears. Look at the **status** and the **request URL**.
+
+## Steps
+
+1. Open the Network tab before you click anything.
+2. Type a task and press Save.
+3. Find the request. What status came back?
+4. Read the URL carefully, character by character.
+5. Fix it. Save again. Confirm you get a success status.
+
+## What the bug looks like
+
+A request appears in Network with status **404**. The app says nothing at all — no message on screen, nothing in the console.
+
+## 💡 Hint — read the URL character by character
+
+A 404 means the server understood you fine and has nothing at that address. That usually means the path is wrong, not the code around it. Say the URL out loud, slowly.
+
+## 💡 Hint — why was it silent?
+
+Find the `catch` block. Look at what it does with the error. An empty `catch` is how a bug hides: the request fails, the error is caught, and then it's thrown away without telling anyone.
+
+## How you know it's working
+
+- [ ] Network shows a **201**, not a 404.
+- [ ] The saved task appears under "Saved this session".
+- [ ] The input clears after saving.
+
+## Stretch (if you finish early)
+
+Make the failure loud. Add an error message to the page so that the *next* time a request fails, whoever's using it can see. Then break the URL again on purpose to check your message shows up. This is the real fix — an empty `catch` is a bug even when the URL is right.
+
+---
+
+# 🛑 STOP
+
+## Wait for the debrief before Step 3.
+
+---
+
+# Step 3 — The numbers never change
+
+## Route
+
+<http://localhost:5173/exercise/debugging/stats>
+
+## Goal
+
+Clicking **done** or **todo** should change the count and the list. It doesn't. The page is stuck showing all five tasks.
+
+## Where to look
+
+**React DevTools → ⚛ Components.** Select the `StatsPage` component and look at its state in the right-hand panel.
+
+Click a filter button. Watch both pieces of state. One of them changes. One of them doesn't. That gap is the bug.
+
+## Steps
+
+1. Open React DevTools, Components tab.
+2. Select `StatsPage` in the tree.
+3. Click **done**. Watch the state panel.
+4. Note which value updated and which stayed put.
+5. Find the code that should have updated it. Fix it.
+
+## What the bug looks like
+
+`filter` changes to `"done"` in the state panel. `visible` stays exactly as it was. The UI follows `visible`, so nothing moves.
+
+## 💡 Hint — what makes an effect run again?
+
+A `useEffect` only re-runs when something in its dependency array changes. An empty array `[]` means "run once, on mount, and never again."
+
+## 💡 Hint — the rule
+
+Every value the effect reads from outside itself belongs in the dependency array. Read the effect body. What does it use? Is that thing listed?
+
+## How you know it's working
+
+- [ ] Clicking **done** shows only completed tasks and the count drops.
+- [ ] Clicking **todo** shows only unfinished tasks.
+- [ ] Clicking **all** brings all five back.
+- [ ] In React DevTools, `visible` now changes whenever `filter` does.
+
+## Stretch — the better fix
+
+Adding the dependency makes it work. But ask a harder question: **why is this in state at all?**
+
+`visible` is just `filter` applied to a list. It can be worked out during render:
+
+```tsx
+const visible = applyFilter(INITIAL_TASKS, filter);
+```
+
+Delete the `useState` and the `useEffect` entirely and use that line instead. Now the bug is impossible — there's no second copy of the data to fall out of date.
+
+That's the real lesson. State that mirrors other state will eventually disagree with it. The safest bug is the one you can't write.
+
+---
+
+# Done
+
+Three bugs, three tools:
+
+| Bug | Evidence | Tool |
+| --- | -------- | ---- |
+| Crash | A thrown error naming the line | Console + Sources |
+| Silent failure | A request that failed | Network |
+| Stale value | State that didn't update | React DevTools |
+
+The method didn't change. Only the panel did. When something is wrong, ask **where would this leave a trace?** and open that panel.
+
+## Now run the checks
+
+```
+pnpm typecheck
+pnpm check
+```
+
+Bug 1 was a type error. Bug 3 was a lint error. Both were sitting there before you ever opened a browser — the tooling had already found two of your three bugs.
+
+Bug 2 was the only one that needed a human and a Network tab. A wrong URL is still a valid string; no compiler can tell you that `/todoss` isn't a real path.
+
+That's the takeaway: run the cheap checks first, and save the debugging for what they can't catch.
+
+## Want to see the finished version?
+
+```
+git checkout exercise-debugging-solution
+```
+
+## What we did not cover
+
+- **Performance profiling** — the ⚛ Profiler tab, finding slow renders.
+- **Memory leaks** — effects that never clean up, listeners that pile up.
+- **Error boundaries** — catching a crash so one broken component doesn't blank the page.
+- **Debugging production** — source maps, and tools like Sentry.
+
+These are the next layer. Start with what you learned here.

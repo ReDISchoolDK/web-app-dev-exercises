@@ -10,33 +10,76 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExerciseDebuggingIndexRouteImport } from './routes/exercise/debugging/index'
+import { Route as ExerciseDebuggingAddRouteImport } from './routes/exercise/debugging/add'
+import { Route as ExerciseDebuggingStatsRouteImport } from './routes/exercise/debugging/stats'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExerciseDebuggingIndexRoute = ExerciseDebuggingIndexRouteImport.update({
+  id: '/exercise/debugging/',
+  path: '/exercise/debugging/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExerciseDebuggingAddRoute = ExerciseDebuggingAddRouteImport.update({
+  id: '/exercise/debugging/add',
+  path: '/exercise/debugging/add',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExerciseDebuggingStatsRoute = ExerciseDebuggingStatsRouteImport.update({
+  id: '/exercise/debugging/stats',
+  path: '/exercise/debugging/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/exercise/debugging/add': typeof ExerciseDebuggingAddRoute
+  '/exercise/debugging/stats': typeof ExerciseDebuggingStatsRoute
+  '/exercise/debugging/': typeof ExerciseDebuggingIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/exercise/debugging/add': typeof ExerciseDebuggingAddRoute
+  '/exercise/debugging/stats': typeof ExerciseDebuggingStatsRoute
+  '/exercise/debugging': typeof ExerciseDebuggingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/exercise/debugging/add': typeof ExerciseDebuggingAddRoute
+  '/exercise/debugging/stats': typeof ExerciseDebuggingStatsRoute
+  '/exercise/debugging/': typeof ExerciseDebuggingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/exercise/debugging/add'
+    | '/exercise/debugging/stats'
+    | '/exercise/debugging/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/exercise/debugging/add'
+    | '/exercise/debugging/stats'
+    | '/exercise/debugging'
+  id:
+    | '__root__'
+    | '/'
+    | '/exercise/debugging/add'
+    | '/exercise/debugging/stats'
+    | '/exercise/debugging/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExerciseDebuggingAddRoute: typeof ExerciseDebuggingAddRoute
+  ExerciseDebuggingStatsRoute: typeof ExerciseDebuggingStatsRoute
+  ExerciseDebuggingIndexRoute: typeof ExerciseDebuggingIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +91,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/exercise/debugging/': {
+      id: '/exercise/debugging/'
+      path: '/exercise/debugging'
+      fullPath: '/exercise/debugging/'
+      preLoaderRoute: typeof ExerciseDebuggingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exercise/debugging/add': {
+      id: '/exercise/debugging/add'
+      path: '/exercise/debugging/add'
+      fullPath: '/exercise/debugging/add'
+      preLoaderRoute: typeof ExerciseDebuggingAddRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exercise/debugging/stats': {
+      id: '/exercise/debugging/stats'
+      path: '/exercise/debugging/stats'
+      fullPath: '/exercise/debugging/stats'
+      preLoaderRoute: typeof ExerciseDebuggingStatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExerciseDebuggingAddRoute: ExerciseDebuggingAddRoute,
+  ExerciseDebuggingStatsRoute: ExerciseDebuggingStatsRoute,
+  ExerciseDebuggingIndexRoute: ExerciseDebuggingIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
