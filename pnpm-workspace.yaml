@@ -1,7 +1,7 @@
 # ──────────────────────────────────────────────────────────────
 # pnpm supply-chain security settings
 #
-# pnpm v10+ blocks lifecycle scripts (postinstall, etc.) by
+# pnpm blocks lifecycle scripts (postinstall, etc.) by
 # default — this prevents malicious packages from running code
 # during install. The settings below add additional layers of
 # protection. See: https://pnpm.io/settings
@@ -22,7 +22,7 @@ allowBuilds:
 
 # Fail installation if any dependency has unreviewed build scripts
 # that aren't covered by allowBuilds above. This is the default
-# in pnpm v11 — we enable it early to be explicit.
+# in pnpm v11 — kept here so the intent stays explicit.
 strictDepBuilds: true
 
 # Don't install a package version published less than 4 hours ago.
