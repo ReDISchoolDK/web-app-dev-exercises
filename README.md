@@ -10,11 +10,13 @@ The `main` branch is the clean template. Each exercise lives on its own branch, 
 
 | Branch | Topic |
 | ------ | ----- |
+| `exercise-bridge` | First contact: HTML, CSS, JS/TS — no React (no solution branch; the hints contain the answers) |
+| `exercise-tailwind` | Tailwind utility classes: card, responsive grid, interactive buttons |
 | `exercise-react-query-step-1` … `-step-3` | TanStack Query: `useQuery`, query keys, Zustand integration |
 | `exercise-use-local-storage` | Writing a custom `useLocalStorage` hook |
 | `exercise-express-json` | A small Express + JSON API |
 | `exercise-bookmarks` | Zustand + Immer store design |
-| `exercise-login` | Forms: TanStack Form + Zod validation |
+| `exercise-login` | Forms: hand-rolled validation struggle, then TanStack Form + Zod |
 | `exercise-debugging` | Finding bugs with Console, Network and React DevTools |
 
 Every exercise has a matching `-solution` branch with the answer key. Start one with:
