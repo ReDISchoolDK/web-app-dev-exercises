@@ -71,6 +71,18 @@ Your instructor will call a swap partway through. The navigator's job is real: r
 
 ---
 
+# First: try it by hand
+
+Before the guided steps, open <http://localhost:5173/exercise/login-by-hand>. It's a working form with **zero validation**, in `src/routes/exercise/login-by-hand/index.tsx`. Typing and submitting already work — that part is not the exercise.
+
+The task:
+
+> Make this form reject bad input. A valid email, a password of at least 8 characters. Show an error next to the field — but **only after the user has touched it**. No form library.
+
+No hints for this part, and no solution anywhere. The point is to feel where it hurts: checking an email is fiddly, "has this field been touched?" needs tracking, and every field needs its own error wiring. Keep whatever mess you end up with — you'll want to compare it with what the library does below.
+
+---
+
 # 🛑 STOP
 
 ## Wait for the demo before you start coding.
