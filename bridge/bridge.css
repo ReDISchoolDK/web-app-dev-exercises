@@ -1,0 +1,37 @@
+/* Plain, hand-written CSS. `.card` selects every element with
+   class="card" in the HTML tree and styles it. */
+
+body {
+	font-family: system-ui, sans-serif;
+	background-color: #f3f4f6;
+}
+
+.card {
+	max-width: 360px;
+	margin: 4rem auto;
+	padding: 1.5rem;
+	background-color: #ffffff;
+	border: 1px solid #e5e7eb;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+}
+
+.card h2 {
+	margin: 0 0 0.25rem;
+	color: #111827;
+}
+
+.card p {
+	margin: 0;
+	color: #4b5563;
+}
+
+/* Preview of where this course goes: the app in `src/` writes styles as
+   Tailwind utility classes directly on the element instead of in a CSS
+   file. The card above would look roughly like this there:
+
+   <div class="max-w-sm mx-auto p-6 bg-white border border-gray-200
+               rounded-xl shadow-md">
+
+   Same properties — different place to write them. This file is the only
+   raw CSS you'll write in this repo. */

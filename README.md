@@ -1,156 +1,246 @@
-# Web App Dev Exercises
+# Exercise: The Bridge — First Contact with the Web
 
-This is the starter template for building web apps, and the home of the course exercises. It comes with everything set up so you can jump straight into writing features instead of spending hours configuring tools.
+Keep this file open while you work.
 
-To create your own project from this template, click **Use this template** on GitHub.
+You already know how to program. This exercise connects what you know to the web: what a web page is made of, and the handful of JavaScript patterns this course leans on later. Nothing here is React — that comes after.
 
-## Exercises
+A web page is three parts:
 
-The `main` branch is the clean template. Each exercise lives on its own branch, with a `README.md` on the branch explaining what to build:
+1. **HTML** — the structure. Nested tags form a tree (the browser calls it the **DOM**).
+2. **CSS** — the look. Selectors pick elements in that tree and style them.
+3. **JavaScript** — the behavior. Code that runs in the browser.
 
-| Branch | Topic |
-| ------ | ----- |
-| `exercise-react-query-step-1` … `-step-3` | TanStack Query: `useQuery`, query keys, Zustand integration |
-| `exercise-use-local-storage` | Writing a custom `useLocalStorage` hook |
-| `exercise-express-json` | A small Express + JSON API |
-| `exercise-bookmarks` | Zustand + Immer store design |
-| `exercise-login` | Forms: TanStack Form + Zod validation |
-| `exercise-debugging` | Finding bugs with Console, Network and React DevTools |
+You'll touch all three, in that order, in one tiny folder.
 
-Every exercise has a matching `-solution` branch with the answer key. Start one with:
+**Don't read ahead.** Do the tasks in order. Hints are tiered — a nudge first, the shape second, the answer last. Read them when you're stuck, not before.
 
-```bash
-git checkout exercise-react-query-step-1
+---
+
+## Setup
+
+You should be on the branch `exercise-bridge`. Check with:
+
+```
+git status
+```
+
+Then:
+
+```
 pnpm install
 pnpm dev
 ```
 
-## How To
+Open exactly this address: **<http://localhost:5173/bridge/>** (with the trailing slash).
 
-- **Add a new page** — Create a file in `src/routes/`. The file name becomes the URL path (e.g. `src/routes/about.tsx` → `/about`). See `src/routes/index.tsx` for a working example.
-- **Add a UI component** — Run `pnpm dlx shadcn@latest add button` (swap `button` for any component name). It gets copied into `src/components/ui/`. Browse all components at [ui.shadcn.com](https://ui.shadcn.com/docs/components).
-- **Fetch data from an API** — Use TanStack Query's `useQuery` hook. See `src/lib/api.ts` for an example.
-- **Share state between components** — Use a Zustand store. See `src/stores/example.ts` for the pattern.
-- **Use environment variables** — Copy `.env.example` to `.env`. Variables must start with `VITE_` to be available in your app.
+There's also an app at `http://localhost:5173/` — ignore it. That's the React app this course builds later. Your page lives next to it.
 
-## Scripts
+Also open **DevTools**: press `F12` (or right-click → Inspect) and pick the **Console** tab. Keep it open the whole time.
 
-| Command          | What it does                           |
-| ---------------- | -------------------------------------- |
-| `pnpm dev`       | Start the development server           |
-| `pnpm build`     | Build the app for production           |
-| `pnpm preview`   | Preview the production build locally   |
-| `pnpm check`     | Run the linter and formatter (Biome)   |
-| `pnpm typecheck` | Check for TypeScript errors            |
+---
 
+## How the repo is laid out
 
-## What's Inside
+Everything for this exercise is in one folder, away from the app:
 
-Here's every major tool in this project and what it does.
+| File | What it is |
+| ---- | ---------- |
+| `bridge/index.html` | The structure — a small card |
+| `bridge/bridge.css` | The look — styles for that card |
+| `bridge/bridge.ts` | The behavior — your three code tasks |
 
-### React
+The `src/` folder is the React app. Don't touch it today.
 
-React is a JavaScript library for building user interfaces. Instead of writing raw HTML that updates the whole page, you write small, reusable **components** (like a button, a form, or a card) and React efficiently updates only the parts of the page that change.
+---
 
-Docs: [react.dev](https://react.dev/learn)
+## Pair format
 
-### TypeScript
+- **Driver** — writes the code.
+- **Navigator** — reads this file out loud and tells the driver what's next.
 
-TypeScript is JavaScript with **types**. Types tell your editor (and your teammates) what kind of data a variable holds — is it a string? A number? An array of objects? This catches bugs before you even run your code. Every `.tsx` and `.ts` file in this project uses TypeScript.
+Your instructor will call a swap partway through. The navigator's job is real: read the file, watch the screen, catch typos, ask "what does that line do?" If the navigator is quiet, only one person is working. Talk.
 
-Docs: [typescriptlang.org](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+---
 
-### Vite
+# 🛑 STOP
 
-Vite (pronounced "veet") is the **build tool** that runs your app during development and bundles it for production. When you run `pnpm dev`, Vite starts a local server and instantly refreshes the browser whenever you save a file. It's extremely fast.
+## Wait for the demo before you start coding.
 
-Docs: [vite.dev](https://vite.dev/guide/)
+Your instructor will demo first. **Laptops closed.** Watch. Then come back here.
 
-### Tailwind CSS
+Working through this on your own? Just keep going.
 
-Tailwind is a **CSS framework** that lets you style elements using short utility classes directly in your HTML/JSX. Instead of writing a separate CSS file with `.card { padding: 16px; border-radius: 8px; }`, you write `<div className="p-4 rounded-lg">`. It keeps your styles right next to the elements they apply to.
+---
 
-Docs: [tailwindcss.com](https://tailwindcss.com/docs)
+# Task 1 — Read the card
 
-### shadcn/ui
+## Files to read
 
-shadcn is a **component library** — a collection of pre-built UI pieces like buttons, dialogs, dropdowns, and more. Unlike most component libraries, shadcn copies the component source code into your project (into `src/components/ui/`), so you own it and can customize it however you want.
+`bridge/index.html` and `bridge/bridge.css`
 
-Docs: [ui.shadcn.com](https://ui.shadcn.com/docs)
+## Do this
 
-### TanStack Router
+1. Read the HTML. Notice the nesting: `html` → `body` → `div.card` → `h2` and `p`. That nesting **is** the DOM tree.
+2. Read the CSS. `.card` means "every element with `class="card"`". Predict, out loud: what will the card look like? Background? Corners? Where on the page?
+3. Now open <http://localhost:5173/bridge/> and check your prediction.
+4. In DevTools, switch to the **Elements** tab and click the `<div class="card">`. The Styles panel shows exactly the CSS you just read, applied to exactly that element. That's the whole trick: HTML is the tree, CSS selects into it.
 
-TanStack Router handles **navigation** between pages. It uses **file-based routing**, which means every file you create in the `src/routes/` folder automatically becomes a page in your app. For example, `src/routes/about.tsx` becomes the `/about` page. No manual route configuration needed.
+## How you know it's done
 
-Docs: [tanstack.com/router](https://tanstack.com/router/latest/docs/framework/react/overview)
+- [ ] You can point at the line in `bridge.css` responsible for the rounded corners
+- [ ] You found the card in the Elements tab and saw its styles
 
-### TanStack Query
+---
 
-TanStack Query (also called React Query) manages **data fetching**. It handles loading states, error states, caching, and background refetching for you. Instead of writing `useState` + `useEffect` + error handling every time you fetch data, you call `useQuery` and it takes care of everything.
+# Task 2 — Change the card (no guide)
 
-Docs: [tanstack.com/query](https://tanstack.com/query/latest/docs/framework/react/overview)
+## Do this
 
-### Zustand
+Two changes, **predict before you save** each time:
 
-Zustand (German for "state") is a **state management** library. When multiple components need to share the same data (like a logged-in user or a shopping cart), you put that data in a Zustand store. Any component can read from or write to the store, and they'll all stay in sync.
+1. Add a second element to the card in `index.html` — another `<p>` with a second fact, or a `<h3>`, your choice.
+2. Change one style in `bridge.css` — the background color, the border radius, the shadow, anything visible.
 
-Docs: [zustand.docs.pmnd.rs](https://zustand.docs.pmnd.rs/getting-started/introduction)
+The browser reloads on save. Say what you expect first, then look.
 
-### Biome
+## How you know it's done
 
-Biome is a **linter and formatter**. A linter checks your code for common mistakes and bad patterns. A formatter makes your code look consistent (indentation, spacing, semicolons, etc.). Biome does both, and it runs automatically every time you save a file in VS Code and every time you commit code.
+- [ ] Your new element shows up inside the card, styled like the rest
+- [ ] Your style change looks the way you predicted
 
-Docs: [biomejs.dev](https://biomejs.dev/guides/getting-started/)
+## 💡 Hint 1 — where does the new element go?
 
-### Husky + lint-staged
+Inside `<div class="card">` … `</div>`. Nesting decides belonging.
 
-Husky runs **git hooks** — scripts that execute automatically at certain points in your git workflow. In this project, Husky runs Biome on every file you're about to commit (using lint-staged to target only the changed files). This prevents badly formatted or buggy code from getting into the repository.
+## 💡 Hint 2 — the shape
 
-Docs: [typicode.github.io/husky](https://typicode.github.io/husky/) · [lint-staged](https://github.com/lint-staged/lint-staged)
-
-### pnpm
-
-pnpm is a **package manager**, like npm or yarn, but faster and more disk-efficient. You use it to install libraries (`pnpm install`), add new ones (`pnpm add some-library`), and run scripts (`pnpm dev`).
-
-Docs: [pnpm.io](https://pnpm.io/motivation)
-
-### Cloudflare
-
-When you're ready to put your app on the internet, it gets deployed to **Cloudflare** as a Worker serving static assets. The `wrangler.jsonc` file contains the deployment configuration, including `not_found_handling: "single-page-application"` — that's what makes deep links like `/about` work when someone opens them directly or hits reload. Cloudflare is fast, free for small projects, and handles all the server stuff for you.
-
-Docs: [developers.cloudflare.com/workers/static-assets](https://developers.cloudflare.com/workers/static-assets/)
-
-### GitHub Actions
-
-GitHub Actions is a **CI/CD** (continuous integration / continuous deployment) tool. Every time you open a pull request, it automatically runs checks — linting, type checking, and building your app — to make sure nothing is broken before your code gets merged.
-
-Docs: [docs.github.com/actions](https://docs.github.com/en/actions/quickstart)
-
-## Quick Start
-
-```bash
-pnpm install
-pnpm dev
+```html
+<div class="card">
+	<h2>Grace Hopper</h2>
+	<p>…the existing fact…</p>
+	<p>…your new fact…</p>
+</div>
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Why is it styled already? Look at the `.card p` selector in the CSS — it targets every `p` inside the card, including yours.
 
-## Project Structure
+## 💡 Reveal — one style change
+
+In `bridge.css`, change `background-color: #ffffff;` to `background-color: #fef9c3;` (a pale yellow). Any hex color works — DevTools' color picker (click the little square in the Styles panel) lets you try values live before writing them into the file.
+
+---
+
+# Task 3 — Read and predict
+
+## File to read
+
+`bridge/bridge.ts`, **Section 1**
+
+## Do this
+
+1. Read the `tasks` array: it's a list of objects. Each object has a `name`, a number of `minutes`, and an `isDone` flag. Compare with what you know — a list of dicts (Python), a List of objects (Java/C#).
+2. Read the three chains. `filter` keeps the elements where the arrow function says `true`. `map` transforms every element. `(task) => task.minutes <= 15` is a whole function: input `task`, returns that comparison.
+3. **Write down** what A, B and C will print. Both of you commit to an answer.
+4. Check the browser Console. Scores on the board.
+
+## How you know it's done
+
+- [ ] You predicted A, B and C before looking (wrong guesses are fine — they're the point)
+- [ ] Whoever guessed wrong can now say *why* the real answer is what it is
+
+## 💡 Hint — B surprised me
+
+`.map((task) => task.name.toUpperCase())` builds a **new** array of shouted names in the same order. Index `[1]` is the second element — counting starts at 0.
+
+---
+
+# Task 4 — Translate the pseudocode (no guide)
+
+## File to edit
+
+`bridge/bridge.ts`, **Section 2**
+
+## Do this
+
+The comment shows pseudocode:
 
 ```
-src/
-├── components/
-│   ├── ui/          # shadcn components (don't edit directly)
-│   └── Header.tsx   # Navigation bar
-├── lib/
-│   ├── api.ts       # API helpers
-│   └── utils.ts     # Utility functions
-├── routes/
-│   ├── __root.tsx   # Root layout (wraps all pages)
-│   └── index.tsx    # Home page (/)
-├── stores/
-│   └── example.ts   # Example Zustand store (replace with your own)
-├── main.tsx         # App entry point
-├── router.tsx       # Router setup
-└── index.css        # Global styles and theme
+for each task in tasks:
+  if task is done:
+    collect task.name
 ```
+
+Write it as **one** `filter(...).map(...)` chain, replacing the empty array in `doneTaskNames`. Save, check the Console: it should print the names of the two finished tasks.
+
+## How you know it's done
+
+- [ ] The Console prints `Done tasks:` followed by two names
+- [ ] There's no `for` loop anywhere — one chain does it
+
+## 💡 Hint 1 — which method is the `if`?
+
+The `if … collect` part is a `filter`. The "collect **task.name**" part (you want the name, not the whole object) is a `map`.
+
+## 💡 Hint 2 — the shape
+
+```ts
+tasks.filter((task) => /* keep the done ones */).map((task) => /* just the name */);
+```
+
+## 💡 Reveal — the full line
+
+```ts
+const doneTaskNames: string[] = tasks
+	.filter((task) => task.isDone)
+	.map((task) => task.name);
+```
+
+---
+
+# Task 5 — Make TypeScript catch a bug
+
+## File to edit
+
+`bridge/bridge.ts`, **Section 3**
+
+## Do this
+
+1. Add a type annotation: change `const minutesPerDay =` to `const minutesPerDay: number =`. Nothing changes — the value already is a number. You've just written the promise down.
+2. Now break the promise: change `30` to `"thirty"`. Look at the editor — red squiggle. Hover it and **read the message out loud**.
+3. Put `30` back. Squiggle gone.
+
+That's TypeScript's whole job: it caught a wrong value **before the code ever ran**. In plain JavaScript, `"thirty"` would have sailed through and exploded later, somewhere else, at runtime.
+
+## How you know it's done
+
+- [ ] You saw the red squiggle and can say what the message meant
+- [ ] The file is back to a state with no red anywhere
+
+## 💡 Hint — I don't get a squiggle
+
+Make sure you're editing `bridge/bridge.ts` in VS Code with the repo folder open (not a copy of the file elsewhere). The squiggle usually appears a second or two after you stop typing. Still nothing? Run `pnpm typecheck` in the terminal — it prints the same error.
+
+---
+
+# Done
+
+You met the whole stack in one folder:
+
+| Part | File | The idea |
+| ---- | ---- | -------- |
+| HTML | `index.html` | Nested tags form a tree — the DOM |
+| CSS | `bridge.css` | Selectors pick into the tree and style it |
+| JS | `bridge.ts` | Arrow functions; `filter` keeps, `map` transforms |
+| TS | `bridge.ts` | Types are promises the editor checks before the code runs |
+
+There's no separate solution branch — the reveal hints above already contain every answer.
+
+One heads-up for the rest of this course: this is the **only raw CSS you'll write here**. The app styles everything with Tailwind utility classes instead — the comment at the bottom of `bridge.css` shows a preview of what that looks like.
+
+## What we did not cover
+
+- **How the page updates itself** — clicking a button and changing the DOM from code. That's exactly what React is for, and it's next.
+- **`reduce` and friends** — `filter` and `map` carry you a long way first.
+- **Real TypeScript types** — interfaces, unions, generics. They arrive one at a time, when a real file needs them.
+
+Start with what you learned here.
