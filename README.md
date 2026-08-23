@@ -1,8 +1,5 @@
 # Exercise: Tailwind — Style a Page in Three Layers
 
-> **You are on the solution branch.** This is the answer key. To do the
-> exercise yourself, switch to `exercise-tailwind` first.
-
 Keep this file open while you work.
 
 You will style an unstyled page using only **Tailwind utility classes** — no CSS files. The page is a team grid: six profile cards and a row of action buttons. Right now it's plain black text on a gray page. When you're done it looks like something you'd ship.

@@ -1,19 +1,25 @@
 // =====================================================================
-// EXERCISE — Tailwind: utility-class styling in three layers (solved)
+// EXERCISE — Tailwind: utility-class styling in three layers
 //
-// A grid of profile cards and a row of action buttons, styled with
-// nothing but Tailwind utility classes. Three files, one layer each:
+// Build: a grid of profile cards and a row of action buttons, styled
+// with nothing but Tailwind utility classes. Three files, one layer
+// each — read the README for the walkthrough:
 //
 // Step 1 — ProfileCard.tsx:   colors, spacing, typography, flexbox
 // Step 2 — ProfileGrid.tsx:   responsive grid with md: / lg: prefixes
 // Step 3 — ActionButtons.tsx: hover: / focus-visible: / active: / disabled:
 //
-// This file is the page shell. The light gray background is here on
-// purpose so a white card has something to stand out against.
+// This file is the page shell — read it, don't touch it. The light
+// gray background is here on purpose so your white card has something
+// to stand out against.
 //
-// Note for the navigator: the whole exercise is one pattern repeated —
-// `property-value`, then `state:property-value`, then
-// `breakpoint:property-value`. Point at it every time it shows up.
+// Success criteria:
+//   [ ] Step 1: a styled card — white, rounded, shadowed, avatar circle
+//   [ ] Step 2: 1 / 2 / 3 grid columns as the screen gets wider
+//   [ ] Step 3: buttons with hover, keyboard focus ring, press, disabled
+//
+// Navigator's reading: styling with utility classes
+//   https://tailwindcss.com/docs/styling-with-utility-classes
 // =====================================================================
 
 import { createFileRoute } from "@tanstack/react-router";

@@ -1,15 +1,19 @@
 // =====================================================================
-// STEP 1 — Style the profile card (solved)
+// STEP 1 — Style the profile card
 //
-// A white card with rounded corners, a shadow, a subtle border and
-// padding. The avatar is a 64px circle beside the name and role,
-// laid out with flexbox. The bio sits below with a little top margin.
+// Build: a white card with rounded corners, a shadow, a subtle border
+// and padding. The avatar becomes a 64px circle beside the name and
+// role, laid out with flexbox. The bio sits below with a little
+// top margin.
+//
+// The structure is done. You only add className props — read the
+// README (Step 1) for the walkthrough and the class reference.
 //
 // Success criteria:
-//   [x] The card has a white background, rounded corners, a shadow and padding
-//   [x] The avatar is circular and sits to the left of the name
-//   [x] Name is large and bold, role is small and gray, bio is regular
-//   [x] Nothing is clipped or overflowing
+//   [ ] The card has a white background, rounded corners, a shadow and padding
+//   [ ] The avatar is circular and sits to the left of the name
+//   [ ] Name is large and bold, role is small and gray, bio is regular
+//   [ ] Nothing is clipped or overflowing
 //
 // 💡 `shrink-0` stops flexbox from squeezing the avatar when the text
 //    is long. `object-cover` crops the image instead of squashing it.
@@ -26,19 +30,20 @@ interface ProfileCardProps {
 
 export const ProfileCard = ({ profile }: ProfileCardProps) => {
 	return (
-		<div className="rounded-xl border border-gray-200 bg-white p-6 shadow-md">
-			<div className="flex items-start gap-4">
-				<img
-					src={profile.avatarUrl}
-					alt={profile.name}
-					className="size-16 shrink-0 rounded-full object-cover"
-				/>
+		// 1. Make this div the card box: white bg, rounded, shadow, border, padding.
+		<div>
+			{/* 2. Make this div a flex row with a gap, items aligned to the top. */}
+			<div>
+				{/* 3. Avatar: fixed 64px square, circular, cropped — not squashed. */}
+				<img src={profile.avatarUrl} alt={profile.name} />
 				<div>
-					<h2 className="text-xl font-bold text-gray-900">{profile.name}</h2>
-					<p className="text-sm text-gray-500">{profile.role}</p>
+					{/* 4. Name large + bold, role small + gray. */}
+					<h2>{profile.name}</h2>
+					<p>{profile.role}</p>
 				</div>
 			</div>
-			<p className="mt-4 text-gray-700">{profile.bio}</p>
+			{/* 5. Bio: regular text with margin above. */}
+			<p>{profile.bio}</p>
 		</div>
 	);
 };
