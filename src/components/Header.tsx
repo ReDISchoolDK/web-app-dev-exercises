@@ -15,6 +15,12 @@ export default function Header() {
 					>
 						Home
 					</Link>
+					<Link
+						to="/exercise/tailwind"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Tailwind
+					</Link>
 					{/* Add your own routes here */}
 				</nav>
 			</div>
