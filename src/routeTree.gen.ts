@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExampleIndexRouteImport } from './routes/example/index'
 import { Route as ExerciseLoginByHandIndexRouteImport } from './routes/exercise/login-by-hand/index'
 import { Route as ExerciseLoginIndexRouteImport } from './routes/exercise/login/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExampleIndexRoute = ExampleIndexRouteImport.update({
+  id: '/example/',
+  path: '/example/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExerciseLoginByHandIndexRoute =
@@ -32,30 +38,39 @@ const ExerciseLoginIndexRoute = ExerciseLoginIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/example/': typeof ExampleIndexRoute
   '/exercise/login-by-hand/': typeof ExerciseLoginByHandIndexRoute
   '/exercise/login/': typeof ExerciseLoginIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/example': typeof ExampleIndexRoute
   '/exercise/login-by-hand': typeof ExerciseLoginByHandIndexRoute
   '/exercise/login': typeof ExerciseLoginIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/example/': typeof ExampleIndexRoute
   '/exercise/login-by-hand/': typeof ExerciseLoginByHandIndexRoute
   '/exercise/login/': typeof ExerciseLoginIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/exercise/login-by-hand/' | '/exercise/login/'
+  fullPaths: '/' | '/example/' | '/exercise/login-by-hand/' | '/exercise/login/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/exercise/login-by-hand' | '/exercise/login'
-  id: '__root__' | '/' | '/exercise/login-by-hand/' | '/exercise/login/'
+  to: '/' | '/example' | '/exercise/login-by-hand' | '/exercise/login'
+  id:
+    | '__root__'
+    | '/'
+    | '/example/'
+    | '/exercise/login-by-hand/'
+    | '/exercise/login/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExampleIndexRoute: typeof ExampleIndexRoute
   ExerciseLoginByHandIndexRoute: typeof ExerciseLoginByHandIndexRoute
   ExerciseLoginIndexRoute: typeof ExerciseLoginIndexRoute
 }
@@ -67,6 +82,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/example/': {
+      id: '/example/'
+      path: '/example'
+      fullPath: '/example/'
+      preLoaderRoute: typeof ExampleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/exercise/login-by-hand/': {
@@ -88,6 +110,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExampleIndexRoute: ExampleIndexRoute,
   ExerciseLoginByHandIndexRoute: ExerciseLoginByHandIndexRoute,
   ExerciseLoginIndexRoute: ExerciseLoginIndexRoute,
 }
