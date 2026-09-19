@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExampleIndexRouteImport } from './routes/example/index'
 import { Route as ExerciseTailwindIndexRouteImport } from './routes/exercise/tailwind/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExampleIndexRoute = ExampleIndexRouteImport.update({
+  id: '/example/',
+  path: '/example/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExerciseTailwindIndexRoute = ExerciseTailwindIndexRouteImport.update({
@@ -25,27 +31,31 @@ const ExerciseTailwindIndexRoute = ExerciseTailwindIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/example/': typeof ExampleIndexRoute
   '/exercise/tailwind/': typeof ExerciseTailwindIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/example': typeof ExampleIndexRoute
   '/exercise/tailwind': typeof ExerciseTailwindIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/example/': typeof ExampleIndexRoute
   '/exercise/tailwind/': typeof ExerciseTailwindIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/exercise/tailwind/'
+  fullPaths: '/' | '/example/' | '/exercise/tailwind/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/exercise/tailwind'
-  id: '__root__' | '/' | '/exercise/tailwind/'
+  to: '/' | '/example' | '/exercise/tailwind'
+  id: '__root__' | '/' | '/example/' | '/exercise/tailwind/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExampleIndexRoute: typeof ExampleIndexRoute
   ExerciseTailwindIndexRoute: typeof ExerciseTailwindIndexRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/example/': {
+      id: '/example/'
+      path: '/example'
+      fullPath: '/example/'
+      preLoaderRoute: typeof ExampleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/exercise/tailwind/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExampleIndexRoute: ExampleIndexRoute,
   ExerciseTailwindIndexRoute: ExerciseTailwindIndexRoute,
 }
 export const routeTree = rootRouteImport
