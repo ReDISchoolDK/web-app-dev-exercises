@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExampleIndexRouteImport } from './routes/example/index'
 import { Route as ExerciseDebuggingIndexRouteImport } from './routes/exercise/debugging/index'
 import { Route as ExerciseDebuggingAddRouteImport } from './routes/exercise/debugging/add'
 import { Route as ExerciseDebuggingStatsRouteImport } from './routes/exercise/debugging/stats'
@@ -17,6 +18,11 @@ import { Route as ExerciseDebuggingStatsRouteImport } from './routes/exercise/de
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExampleIndexRoute = ExampleIndexRouteImport.update({
+  id: '/example/',
+  path: '/example/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExerciseDebuggingIndexRoute = ExerciseDebuggingIndexRouteImport.update({
@@ -37,12 +43,14 @@ const ExerciseDebuggingStatsRoute = ExerciseDebuggingStatsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/example/': typeof ExampleIndexRoute
   '/exercise/debugging/add': typeof ExerciseDebuggingAddRoute
   '/exercise/debugging/stats': typeof ExerciseDebuggingStatsRoute
   '/exercise/debugging/': typeof ExerciseDebuggingIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/example': typeof ExampleIndexRoute
   '/exercise/debugging/add': typeof ExerciseDebuggingAddRoute
   '/exercise/debugging/stats': typeof ExerciseDebuggingStatsRoute
   '/exercise/debugging': typeof ExerciseDebuggingIndexRoute
@@ -50,6 +58,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/example/': typeof ExampleIndexRoute
   '/exercise/debugging/add': typeof ExerciseDebuggingAddRoute
   '/exercise/debugging/stats': typeof ExerciseDebuggingStatsRoute
   '/exercise/debugging/': typeof ExerciseDebuggingIndexRoute
@@ -58,18 +67,21 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/example/'
     | '/exercise/debugging/add'
     | '/exercise/debugging/stats'
     | '/exercise/debugging/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/example'
     | '/exercise/debugging/add'
     | '/exercise/debugging/stats'
     | '/exercise/debugging'
   id:
     | '__root__'
     | '/'
+    | '/example/'
     | '/exercise/debugging/add'
     | '/exercise/debugging/stats'
     | '/exercise/debugging/'
@@ -77,6 +89,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExampleIndexRoute: typeof ExampleIndexRoute
   ExerciseDebuggingAddRoute: typeof ExerciseDebuggingAddRoute
   ExerciseDebuggingStatsRoute: typeof ExerciseDebuggingStatsRoute
   ExerciseDebuggingIndexRoute: typeof ExerciseDebuggingIndexRoute
@@ -89,6 +102,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/example/': {
+      id: '/example/'
+      path: '/example'
+      fullPath: '/example/'
+      preLoaderRoute: typeof ExampleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/exercise/debugging/': {
@@ -117,6 +137,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExampleIndexRoute: ExampleIndexRoute,
   ExerciseDebuggingAddRoute: ExerciseDebuggingAddRoute,
   ExerciseDebuggingStatsRoute: ExerciseDebuggingStatsRoute,
   ExerciseDebuggingIndexRoute: ExerciseDebuggingIndexRoute,
