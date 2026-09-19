@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExampleIndexRouteImport } from './routes/example/index'
 import { Route as ExerciseUseLocalStorageIndexRouteImport } from './routes/exercise/use-local-storage/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExampleIndexRoute = ExampleIndexRouteImport.update({
+  id: '/example/',
+  path: '/example/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExerciseUseLocalStorageIndexRoute =
@@ -26,27 +32,31 @@ const ExerciseUseLocalStorageIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/example/': typeof ExampleIndexRoute
   '/exercise/use-local-storage/': typeof ExerciseUseLocalStorageIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/example': typeof ExampleIndexRoute
   '/exercise/use-local-storage': typeof ExerciseUseLocalStorageIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/example/': typeof ExampleIndexRoute
   '/exercise/use-local-storage/': typeof ExerciseUseLocalStorageIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/exercise/use-local-storage/'
+  fullPaths: '/' | '/example/' | '/exercise/use-local-storage/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/exercise/use-local-storage'
-  id: '__root__' | '/' | '/exercise/use-local-storage/'
+  to: '/' | '/example' | '/exercise/use-local-storage'
+  id: '__root__' | '/' | '/example/' | '/exercise/use-local-storage/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExampleIndexRoute: typeof ExampleIndexRoute
   ExerciseUseLocalStorageIndexRoute: typeof ExerciseUseLocalStorageIndexRoute
 }
 
@@ -57,6 +67,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/example/': {
+      id: '/example/'
+      path: '/example'
+      fullPath: '/example/'
+      preLoaderRoute: typeof ExampleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/exercise/use-local-storage/': {
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExampleIndexRoute: ExampleIndexRoute,
   ExerciseUseLocalStorageIndexRoute: ExerciseUseLocalStorageIndexRoute,
 }
 export const routeTree = rootRouteImport
