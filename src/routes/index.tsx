@@ -1,3 +1,10 @@
+// =====================================================================
+// EXERCISE BRANCH LANDING PAGE
+//
+// You are on an exercise branch. Your instructions live in README.md at
+// the root of this branch — keep that file open while you work.
+// =====================================================================
+
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -7,28 +14,50 @@ export const Route = createFileRoute("/")({
 function HomePage() {
 	return (
 		<div className="mx-auto max-w-2xl p-8">
-			<h1 className="mb-2 text-3xl font-bold">Session 7 — React Query</h1>
-			<p className="mb-6 text-muted-foreground">
-				One exercise, three steps. Work through them in order. Devtools
-				(bottom-right) should stay open the entire time.
+			<p className="mb-6 text-sm text-muted-foreground">Solution branch</p>
+
+			<h1 className="mb-2 text-3xl font-bold">React Query</h1>
+
+			<p className="mb-6 rounded-md border border-dashed px-4 py-3 text-sm text-muted-foreground">
+				<strong className="text-foreground">This is the answer key.</strong> To
+				do the exercise yourself, switch to{" "}
+				<code className="rounded bg-muted px-1">
+					exercise-react-query-step-1
+				</code>{" "}
+				first.
 			</p>
-			<ul className="flex flex-col gap-3">
-				<li>
-					<Link to="/exercise/random-dog" className="underline">
-						Step 1 — Random dog (useQuery basics)
-					</Link>
-				</li>
-				<li>
-					<Link to="/exercise/sub-breeds" className="underline">
-						Step 2 — Sub-breeds (parameters in the queryKey)
-					</Link>
-				</li>
-				<li>
-					<Link to="/exercise/image-count" className="underline">
-						Step 3 — Image count (Zustand + React Query)
-					</Link>
-				</li>
-			</ul>
+
+			<p className="mb-6 text-muted-foreground">
+				Your instructions are in{" "}
+				<code className="rounded bg-muted px-1">README.md</code> on this branch.
+				Keep it open while you work.
+			</p>
+
+			<div className="rounded-md border border-dashed px-4 py-3">
+				<p className="mb-3 text-sm text-muted-foreground">
+					Three steps, in order:
+				</p>
+				<ol className="flex list-inside list-decimal flex-col gap-2 text-sm text-muted-foreground">
+					<li>
+						<Link to="/exercise/random-dog" className="underline">
+							/exercise/random-dog
+						</Link>{" "}
+						— useQuery basics
+					</li>
+					<li>
+						<Link to="/exercise/sub-breeds" className="underline">
+							/exercise/sub-breeds
+						</Link>{" "}
+						— parameters in the queryKey
+					</li>
+					<li>
+						<Link to="/exercise/image-count" className="underline">
+							/exercise/image-count
+						</Link>{" "}
+						— Zustand + React Query
+					</li>
+				</ol>
+			</div>
 		</div>
 	);
 }
