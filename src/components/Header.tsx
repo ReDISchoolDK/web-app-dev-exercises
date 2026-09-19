@@ -15,6 +15,12 @@ export default function Header() {
 					>
 						Home
 					</Link>
+					<Link
+						to="/example"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Example
+					</Link>
 					{/* Add your own routes here */}
 				</nav>
 			</div>
