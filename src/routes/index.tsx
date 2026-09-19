@@ -1,3 +1,10 @@
+// =====================================================================
+// EXERCISE BRANCH LANDING PAGE
+//
+// You are on an exercise branch. Your instructions live in README.md at
+// the root of this branch — keep that file open while you work.
+// =====================================================================
+
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -7,19 +14,27 @@ export const Route = createFileRoute("/")({
 function HomePage() {
 	return (
 		<div className="mx-auto max-w-2xl p-8">
-			<h1 className="mb-2 text-3xl font-bold">Session 8 — Custom Hooks</h1>
+			<p className="mb-6 text-sm text-muted-foreground">Exercise branch</p>
+
+			<h1 className="mb-2 text-3xl font-bold">
+				Custom Hook —{" "}
+				<code className="rounded bg-muted px-1">useLocalStorage</code>
+			</h1>
+
 			<p className="mb-6 text-muted-foreground">
-				One exercise tonight: build a <code>useLocalStorage</code> hook. Keep{" "}
-				<code>exercise.md</code> open while you pair. Keep DevTools →
-				Application → Local Storage visible the whole time.
+				Your instructions are in{" "}
+				<code className="rounded bg-muted px-1">README.md</code> on this branch.
+				Keep it open while you work.
 			</p>
-			<ul className="flex flex-col gap-3">
-				<li>
+
+			<div className="rounded-md border border-dashed px-4 py-3">
+				<p className="text-sm text-muted-foreground">
+					Start here:{" "}
 					<Link to="/exercise/use-local-storage" className="underline">
-						Exercise — useLocalStorage (Counter that survives reload)
+						/exercise/use-local-storage
 					</Link>
-				</li>
-			</ul>
+				</p>
+			</div>
 		</div>
 	);
 }
