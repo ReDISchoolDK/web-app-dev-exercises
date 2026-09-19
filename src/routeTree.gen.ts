@@ -10,23 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ExerciseSubBreedsIndexRouteImport } from './routes/exercise/sub-breeds/index'
-import { Route as ExerciseRandomDogIndexRouteImport } from './routes/exercise/random-dog/index'
+import { Route as ExampleIndexRouteImport } from './routes/example/index'
 import { Route as ExerciseImageCountIndexRouteImport } from './routes/exercise/image-count/index'
+import { Route as ExerciseRandomDogIndexRouteImport } from './routes/exercise/random-dog/index'
+import { Route as ExerciseSubBreedsIndexRouteImport } from './routes/exercise/sub-breeds/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ExerciseSubBreedsIndexRoute = ExerciseSubBreedsIndexRouteImport.update({
-  id: '/exercise/sub-breeds/',
-  path: '/exercise/sub-breeds/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExerciseRandomDogIndexRoute = ExerciseRandomDogIndexRouteImport.update({
-  id: '/exercise/random-dog/',
-  path: '/exercise/random-dog/',
+const ExampleIndexRoute = ExampleIndexRouteImport.update({
+  id: '/example/',
+  path: '/example/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExerciseImageCountIndexRoute = ExerciseImageCountIndexRouteImport.update({
@@ -34,15 +30,27 @@ const ExerciseImageCountIndexRoute = ExerciseImageCountIndexRouteImport.update({
   path: '/exercise/image-count/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExerciseRandomDogIndexRoute = ExerciseRandomDogIndexRouteImport.update({
+  id: '/exercise/random-dog/',
+  path: '/exercise/random-dog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExerciseSubBreedsIndexRoute = ExerciseSubBreedsIndexRouteImport.update({
+  id: '/exercise/sub-breeds/',
+  path: '/exercise/sub-breeds/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/example/': typeof ExampleIndexRoute
   '/exercise/image-count/': typeof ExerciseImageCountIndexRoute
   '/exercise/random-dog/': typeof ExerciseRandomDogIndexRoute
   '/exercise/sub-breeds/': typeof ExerciseSubBreedsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/example': typeof ExampleIndexRoute
   '/exercise/image-count': typeof ExerciseImageCountIndexRoute
   '/exercise/random-dog': typeof ExerciseRandomDogIndexRoute
   '/exercise/sub-breeds': typeof ExerciseSubBreedsIndexRoute
@@ -50,6 +58,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/example/': typeof ExampleIndexRoute
   '/exercise/image-count/': typeof ExerciseImageCountIndexRoute
   '/exercise/random-dog/': typeof ExerciseRandomDogIndexRoute
   '/exercise/sub-breeds/': typeof ExerciseSubBreedsIndexRoute
@@ -58,18 +67,21 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/example/'
     | '/exercise/image-count/'
     | '/exercise/random-dog/'
     | '/exercise/sub-breeds/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/example'
     | '/exercise/image-count'
     | '/exercise/random-dog'
     | '/exercise/sub-breeds'
   id:
     | '__root__'
     | '/'
+    | '/example/'
     | '/exercise/image-count/'
     | '/exercise/random-dog/'
     | '/exercise/sub-breeds/'
@@ -77,6 +89,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ExampleIndexRoute: typeof ExampleIndexRoute
   ExerciseImageCountIndexRoute: typeof ExerciseImageCountIndexRoute
   ExerciseRandomDogIndexRoute: typeof ExerciseRandomDogIndexRoute
   ExerciseSubBreedsIndexRoute: typeof ExerciseSubBreedsIndexRoute
@@ -91,18 +104,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/exercise/sub-breeds/': {
-      id: '/exercise/sub-breeds/'
-      path: '/exercise/sub-breeds'
-      fullPath: '/exercise/sub-breeds/'
-      preLoaderRoute: typeof ExerciseSubBreedsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/exercise/random-dog/': {
-      id: '/exercise/random-dog/'
-      path: '/exercise/random-dog'
-      fullPath: '/exercise/random-dog/'
-      preLoaderRoute: typeof ExerciseRandomDogIndexRouteImport
+    '/example/': {
+      id: '/example/'
+      path: '/example'
+      fullPath: '/example/'
+      preLoaderRoute: typeof ExampleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/exercise/image-count/': {
@@ -112,11 +118,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExerciseImageCountIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/exercise/random-dog/': {
+      id: '/exercise/random-dog/'
+      path: '/exercise/random-dog'
+      fullPath: '/exercise/random-dog/'
+      preLoaderRoute: typeof ExerciseRandomDogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exercise/sub-breeds/': {
+      id: '/exercise/sub-breeds/'
+      path: '/exercise/sub-breeds'
+      fullPath: '/exercise/sub-breeds/'
+      preLoaderRoute: typeof ExerciseSubBreedsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ExampleIndexRoute: ExampleIndexRoute,
   ExerciseImageCountIndexRoute: ExerciseImageCountIndexRoute,
   ExerciseRandomDogIndexRoute: ExerciseRandomDogIndexRoute,
   ExerciseSubBreedsIndexRoute: ExerciseSubBreedsIndexRoute,
