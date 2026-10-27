@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExampleIndexRouteImport } from './routes/example/index'
+import { Route as ExerciseStoreDemoIndexRouteImport } from './routes/exercise/store-demo/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const ExampleIndexRoute = ExampleIndexRouteImport.update({
   path: '/example/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExerciseStoreDemoIndexRoute = ExerciseStoreDemoIndexRouteImport.update({
+  id: '/exercise/store-demo/',
+  path: '/exercise/store-demo/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/example/': typeof ExampleIndexRoute
+  '/exercise/store-demo/': typeof ExerciseStoreDemoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/example': typeof ExampleIndexRoute
+  '/exercise/store-demo': typeof ExerciseStoreDemoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/example/': typeof ExampleIndexRoute
+  '/exercise/store-demo/': typeof ExerciseStoreDemoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/example/'
+  fullPaths: '/' | '/example/' | '/exercise/store-demo/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/example'
-  id: '__root__' | '/' | '/example/'
+  to: '/' | '/example' | '/exercise/store-demo'
+  id: '__root__' | '/' | '/example/' | '/exercise/store-demo/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ExampleIndexRoute: typeof ExampleIndexRoute
+  ExerciseStoreDemoIndexRoute: typeof ExerciseStoreDemoIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExampleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/exercise/store-demo/': {
+      id: '/exercise/store-demo/'
+      path: '/exercise/store-demo'
+      fullPath: '/exercise/store-demo/'
+      preLoaderRoute: typeof ExerciseStoreDemoIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ExampleIndexRoute: ExampleIndexRoute,
+  ExerciseStoreDemoIndexRoute: ExerciseStoreDemoIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

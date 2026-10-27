@@ -21,6 +21,12 @@ export default function Header() {
 					>
 						Example
 					</Link>
+					<Link
+						to="/exercise/store-demo"
+						className="text-sm text-muted-foreground transition-colors hover:text-foreground [&.active]:text-foreground"
+					>
+						Store demo
+					</Link>
 					{/* Add your own routes here */}
 				</nav>
 			</div>
