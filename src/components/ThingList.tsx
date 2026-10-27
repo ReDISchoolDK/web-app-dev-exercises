@@ -1,9 +1,9 @@
 import { useThingStore } from "@/stores/things";
 
 export const ThingList = () => {
-	// LEARN: The selector `(s) => s.things` picks one slice of the store. This
-	// LEARN: component re-renders only when `things` changes. If you select the whole
-	// LEARN: store (no selector), it re-renders on every change to anything in it.
+	// The selector `(s) => s.things` picks one slice of the store. This
+	// component re-renders only when `things` changes. If you select the whole
+	// store (no selector), it re-renders on every change to anything in it.
 	const things = useThingStore((s) => s.things);
 
 	return (

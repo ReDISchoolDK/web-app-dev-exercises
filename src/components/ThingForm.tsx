@@ -4,12 +4,12 @@ import { Input } from "@/components/ui/input";
 import { useThingStore } from "@/stores/things";
 
 export const ThingForm = () => {
-	// LEARN: The typed text stays in local `useState`, not in the store. Only this
-	// LEARN: component needs it, so sharing it with the whole app would be pointless.
+	// The typed text stays in local `useState`, not in the store. Only this
+	// component needs it, so sharing it with the whole app would be pointless.
 	const [name, setName] = useState("");
 
-	// LEARN: Select only `add`. This function never changes, so this component
-	// LEARN: does not re-render when the list changes.
+	// Select only `add`. This function never changes, so this component
+	// does not re-render when the list changes.
 	const add = useThingStore((s) => s.add);
 	// const {add} = useThingStore((s) => ({ add: s.add }));
 
