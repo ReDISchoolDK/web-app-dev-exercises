@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ThingCount } from "./ThingCount";
 import { ThingForm } from "./ThingForm";
 import { ThingList } from "./ThingList";
@@ -17,6 +17,9 @@ function StoreDemoPage() {
 			<ThingForm />
 			<ThingCount />
 			<ThingList />
+			<Link to="/exercise/store-demo/summary" className="text-sm underline">
+				Go to the summary page
+			</Link>
 		</div>
 	);
 }

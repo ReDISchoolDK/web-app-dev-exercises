@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExampleIndexRouteImport } from './routes/example/index'
 import { Route as ExerciseStoreDemoIndexRouteImport } from './routes/exercise/store-demo/index'
+import { Route as ExerciseStoreDemoSummaryIndexRouteImport } from './routes/exercise/store-demo/summary/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,54 @@ const ExerciseStoreDemoIndexRoute = ExerciseStoreDemoIndexRouteImport.update({
   path: '/exercise/store-demo/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExerciseStoreDemoSummaryIndexRoute =
+  ExerciseStoreDemoSummaryIndexRouteImport.update({
+    id: '/exercise/store-demo/summary/',
+    path: '/exercise/store-demo/summary/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/example/': typeof ExampleIndexRoute
   '/exercise/store-demo/': typeof ExerciseStoreDemoIndexRoute
+  '/exercise/store-demo/summary/': typeof ExerciseStoreDemoSummaryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/example': typeof ExampleIndexRoute
   '/exercise/store-demo': typeof ExerciseStoreDemoIndexRoute
+  '/exercise/store-demo/summary': typeof ExerciseStoreDemoSummaryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/example/': typeof ExampleIndexRoute
   '/exercise/store-demo/': typeof ExerciseStoreDemoIndexRoute
+  '/exercise/store-demo/summary/': typeof ExerciseStoreDemoSummaryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/example/' | '/exercise/store-demo/'
+  fullPaths:
+    | '/'
+    | '/example/'
+    | '/exercise/store-demo/'
+    | '/exercise/store-demo/summary/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/example' | '/exercise/store-demo'
-  id: '__root__' | '/' | '/example/' | '/exercise/store-demo/'
+  to: '/' | '/example' | '/exercise/store-demo' | '/exercise/store-demo/summary'
+  id:
+    | '__root__'
+    | '/'
+    | '/example/'
+    | '/exercise/store-demo/'
+    | '/exercise/store-demo/summary/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ExampleIndexRoute: typeof ExampleIndexRoute
   ExerciseStoreDemoIndexRoute: typeof ExerciseStoreDemoIndexRoute
+  ExerciseStoreDemoSummaryIndexRoute: typeof ExerciseStoreDemoSummaryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExerciseStoreDemoIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/exercise/store-demo/summary/': {
+      id: '/exercise/store-demo/summary/'
+      path: '/exercise/store-demo/summary'
+      fullPath: '/exercise/store-demo/summary/'
+      preLoaderRoute: typeof ExerciseStoreDemoSummaryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +116,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ExampleIndexRoute: ExampleIndexRoute,
   ExerciseStoreDemoIndexRoute: ExerciseStoreDemoIndexRoute,
+  ExerciseStoreDemoSummaryIndexRoute: ExerciseStoreDemoSummaryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
