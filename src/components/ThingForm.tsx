@@ -11,6 +11,7 @@ export const ThingForm = () => {
 	// LEARN: Select only `add`. This function never changes, so this component
 	// LEARN: does not re-render when the list changes.
 	const add = useThingStore((s) => s.add);
+	// const {add} = useThingStore((s) => ({ add: s.add }));
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

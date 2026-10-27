@@ -18,10 +18,7 @@ interface ThingStore {
 // this two-step form whenever we use middleware like `immer`.
 export const useThingStore = create<ThingStore>()(
 	immer((set) => ({
-		things: [
-			{ id: crypto.randomUUID(), name: "Coffee mug" },
-			{ id: crypto.randomUUID(), name: "Desk plant" },
-		],
+		things: [],
 		add: (input) =>
 			// `set` updates the store. React only re-renders when it sees a NEW
 			// object or array, so changing state in place would not update the screen.
@@ -33,3 +30,29 @@ export const useThingStore = create<ThingStore>()(
 			}),
 	})),
 );
+
+// Nested state example WITH Immer (compare with things.without-immer.ts).
+//
+// interface UserStore {
+// 	user: {
+// 		name: string;
+// 		profile: {
+// 			address: { city: string; street: string };
+// 		};
+// 	};
+// 	setCity: (city: string) => void;
+// }
+//
+// export const useUserStore = create<UserStore>()(
+// 	immer((set) => ({
+// 		user: {
+// 			name: "Iga",
+// 			profile: { address: { city: "Berlin", street: "Main St" } },
+// 		},
+// 		setCity: (city) =>
+// 			set((state) => {
+// 				// Change it directly. Immer makes the copies for you.
+// 				state.user.profile.address.city = city;
+// 			}),
+// 	})),
+// );

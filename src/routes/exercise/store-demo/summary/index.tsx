@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ThingCount } from "../ThingCount";
-import { ThingList } from "../ThingList";
+import { ThingCount } from "../../../../components/ThingCount";
+import { ThingList } from "../../../../components/ThingList";
 
 export const Route = createFileRoute("/exercise/store-demo/summary/")({
 	component: SummaryPage,
